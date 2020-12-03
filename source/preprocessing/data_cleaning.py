@@ -316,6 +316,53 @@ class DataCleaning:
             self.df_out.to_csv(cleaned_csv_path)
         return self.df_out, df_outliers
 
+      
+INPUTS_NAN_REPLACE_WITH = {"terrace_area": 0, "garden_area": 0, "facades_number": 0}
+INPUTS_USED = ["area", "property-type", "rooms-number", "zip-code"]
+INPUTS_RANGE = {"area":(0, 9999), "rooms-number":(0,99), "zip-code":(1000,9999)}
+
+_TEST = {"area": 90,
+"property-type": "APARTMENT",
+"rooms-number": 5,
+"zip-code": 1000,
+"garden": True,
+"land-area": 400,
+"garden-area": 20,
+"equipped-kitchen": True,
+"full-address": "Avenue something",
+"swimmingpool": True,
+"furnished": True,
+"open-fire": True,
+"terrace": True,
+"terrace-area": 5,
+"facades-number": 2,
+"building-state": "GOOD"
+}
+
+def get_features(inputs: dict,
+                 inputs_used: dict = INPUTS_USED,
+                 inputs_nan_replace_with: dict = INPUTS_NAN_REPLACE_WITH, #for now skipped for mandatory
+                 inputs_range: dict = INPUTS_RANGE) -> dict:
+    keys_to_delete = []
+    for key in inputs.keys():
+        if key not in inputs_used:
+            #storing first to not change size during iteration
+            keys_to_delete.append(key)
+        elif key in inputs_range.keys():
+            min, max = inputs_range[key]
+            if inputs[key] < min:
+                inputs[key] = min
+            elif inputs[key] > max:
+                inputs[key] = max
+    for key in keys_to_delete:
+        del inputs[key]
+    return inputs
+
+
+#TESTING ON WINDOWS (to exclude as comment when running Jupyter NB)
+print(_TEST)
+output = get_features(_TEST)
+print(output)
 
 #TESTING ON WINDOWS (to exclude as comment when running Jupyter NB)
 """
