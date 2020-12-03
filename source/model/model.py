@@ -45,7 +45,7 @@ def get_linear_modem(df: pd.DataFrame):
     #Drop the features which are irrelevant as per chi - square
     # Use One Hot Encoding For postcodes
     dummies = pd.get_dummies(df, prefix='', prefix_sep='')
-    df = dummies.drop(['9999', 'to_renovate', 'B', ], axis='columns')
+    df = dummies.drop(['9999' ], axis='columns')
     X = df.drop(['price'], axis='columns')
     y = df.price
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=10)
