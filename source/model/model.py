@@ -55,7 +55,11 @@ def get_linear_modem(df: pd.DataFrame):
     lin_reg = modeling.OLS_linear_regression(X_train, y_train)
     # save model through pickle
     with open('ml.pkl','wb') as model_pkl :
-        pickle.dump(lin_reg , model_pkl)
+        pickle.dump(lin_reg , model_pkl)       
+    #
+    columns = {'data_columns' : [col for col in X.columns]}
+    with open("columns.json", "w") as f :
+        f.write(json.dumps(columns))        
     return lin_reg
 
 
