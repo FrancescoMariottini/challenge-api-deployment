@@ -27,7 +27,7 @@ def predict():
         errors = data.validate(datadict)
         if errors:
             abort(BAD_REQUEST, str(errors)) 
-        get the required parameters
+        #get the required parameters
         processeddata = cleaning_data.preprocess(datadict)
         prediction = prediction.predict_price(processeddata)
         return jsonify(prediction)
