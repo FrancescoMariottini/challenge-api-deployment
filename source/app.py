@@ -1,7 +1,9 @@
+
 from flask import Flask,request, jsonify
-import DataFeatures
-from source.preprocessing import cleaning_data
-from source.predict import prediction
+#import DataFeatures
+#from source.preprocessing import cleaning_data
+#from source.predict import prediction
+import prediction
 
 app = Flask(__name__)
 
@@ -23,14 +25,17 @@ def predict():
 
     else :
         datadict = request.get_json()
-        data = DataFeatures()
-        errors = data.validate(datadict)
-        if errors:
-            abort(BAD_REQUEST, str(errors)) 
-        #get the required parameters
-        processeddata = cleaning_data.preprocess(datadict)
-        prediction = prediction.predict_price(processeddata)
-        return jsonify(prediction)
+        #data = DataFeatures()
+        #errors = data.validate(datadict)
+        #if errors:
+        #    abort(BAD_REQUEST, str(errors)) 
+        ##get the required parameters
+        #processeddata = cleaning_data.preprocess(datadict)
+        #predicted_price = { "Estimated price" : prediction.predict_price(processeddata)
+        #              }
+        predicted_price = { "Estimated price" : prediction.predict_price(datadict)
+                          }
+        return jsonify(predicted_price)
         
 
 if __name__ == "__main__":
