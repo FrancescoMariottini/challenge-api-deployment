@@ -1,7 +1,7 @@
 {
     "data": {
-            "area": "100",
-            "property-type": "APARTMENT",
+            "area": 100,
+            "property-type": "APATMENT",
             "rooms-number": 3,
             "zip-code": 2650,
             "land-area": 500,
