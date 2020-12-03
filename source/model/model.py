@@ -25,6 +25,8 @@ from tabulate import tabulate
 from sklearn.linear_model import Lasso
 from sklearn.feature_selection import SelectFromModel
 
+#import pickle to save the model    
+import pickle
 
 #['source','land_surface', 'facades_number', 'swimming_pool_has','postcode_median_price',
 #              'property_subtype_median_facades_number', 'building_state_agg_median_price']
@@ -51,6 +53,9 @@ def get_linear_modem(df: pd.DataFrame):
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=10)
     # Returns a linear regression model fitted with Ordinary Least Squares method
     lin_reg = modeling.OLS_linear_regression(X_train, y_train)
+    # save model through pickle
+    with open('ml.pkl','wb') as model_pkl :
+        pickle.dump(lin_reg , model_pkl)
     return lin_reg
 
 
