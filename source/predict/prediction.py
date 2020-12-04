@@ -14,10 +14,10 @@ def load_files():
     global __data_columns
     global __model
 
-    with open('app/ml.pkl','rb') as model_file :
+    with open('challenge-api-deployment/source/model/ml.pkl','rb') as model_file :
         __model = pickle.load(model_file)
 
-    with open("app/columns.json","r") as f :
+    with open("challenge-api-deployment/source/model/columns.json","r") as f :
         __data_columns = json.load(f)['data_columns']
         __location = __data_columns[4:]
     
@@ -35,17 +35,17 @@ def predict_price(input_data):
     #loc_index = np.where(X.columns == input_data['zip-code'])[0]
     #prop_type_index = np.where(X.columns == input_data['property-type'])[0]
     try :
-        loc_index = __data_columns.index(str(input_data['zip-code']))
+        loc_index = __data_columns.index(str(input_data['zip_code']))
     except :
         loc_index = -1
 
     try :
-        prop_type_index = __data_columns.index(input_data['property-type'])
+        prop_type_index = __data_columns.index(input_data['property_type'])
     except :
         prop_type_index = -1
 
     x = np.zeros(len(__data_columns))
-    x[1] = input_data['rooms-number']
+    x[1] = input_data['rooms_number']
     x[0] = input_data['area']
 
     if prop_type_index >= 0:
