@@ -1,5 +1,6 @@
 from marshmallow import Schema, fields, validates, ValidationError
 from marshmallow.validate import Length, Range
+import json
 
 class DataFeatures(Schema):
     area = fields.Int(required=True)
@@ -28,3 +29,19 @@ class DataFeatures(Schema):
     def build_state_validation(datafeature, value):
         if value.lower() not in ["new", "good", "to renovate", "just renovated", "to rebuild"]:
             raise ValidationError("This state doesn't exist, please select one bewteen: new, good, to renovate, just renovated or to rebuil")
+
+
+f = open("././assets/data_type_issue.json")
+test_dict = json.load(f)['data']
+test_dict = {key.replace('-', '_'): value for key, value in test_dict.items()}
+
+print("To verify:\n", test_dict, "\n")
+
+data = DataFeatures()
+
+errors = data.validate(test_dict)
+if errors:
+    print("Errors:\n", errors, "\n")
+else:
+    result = data.load(test_dict)
+    print("Result:\n", result)
