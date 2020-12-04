@@ -39,9 +39,9 @@ Input requirements for the web developers were initially agreed with the other B
 4. Create your API
 5. Create a Dockerfile to wrap your API
 6. Deploy your Docker image in Heroku
-7. 
+7. Document your API
 
-[previous project](https://github.com/FrancescoMariottini/Belgium-prices-prediction/settings)
+For step 2 and 3 [source files](https://github.com/FrancescoMariottini/Belgium-prices-prediction/tree/main/source) from the previous project were used as basis after adapting them in in line with the JSON input requirements.
 
 
 ## Input requirements
@@ -102,35 +102,54 @@ This python module contains all the code to preprocess the data. The file cleani
 If data doesn't contain the required information, an error is returned to the user.
 
 ## Step 3: Fit your data! ##
-Fit your data to your model.
-
-In the predict folder:
-
-Create a file prediction.py that will contain all the code used to predict a new house's price.
-Your file should contain a function predict() that will take your preprocessed data as an input and return a price as output.
+In the predict folder a file prediction.py contains all the code used to predict a new house's price. The file contains a function predict() that takes the preprocessed data as an input and returns a price as output.
 
 ## Step 4: Create your API ##
-In your app.py file, create a Flask API that contains:
-
-A route at / that accept:
-GET request and return "alive" if the server is alive.
-A route at /predict that accept:
-POST request that receives the data of a house in json format.
-GET request returning a string to explain what the POST expect (data and format).
+In the app.py file, the Flask API contains:
+* A route at / that accept:
+    * GET request and return "alive" if the server is alive.
+* A route at /predict that accept:
+    * POST request that receives the data of a house in json format.
+    * GET request returning a string to explain what the POST expect (data and format).
 
 ## Step 5: Create a Dockerfile to wrap your API ##
-To deploy your API, you will use Docker.
-
-Create a Dockerfile that creates an image with:
-Ubuntu
-Python 3.8
-Flask
-All the other dependencies you will need
-All the files of your project in an /app folder that you will previously create.
-Run your app.py file with python
+To deploy the API Docker was used.
+The Dockerfile created an image with Ubuntu and Python 3.8 plus all the required dependencies for the created code:
+library|version
+click|7.1.2
+Flask|1.1.2
+gunicorn|20.0.4
+itsdangerous|1.1.0
+Jinja2|2.11.2
+MarkupSafe|1.1.1
+marshmallow|3.9.1
+numpy|1.19.4
+pandas|1.1.4
+python-dateutil|2.8.1
+pytz|2020.4
+six|1.15.0
+Werkzeug|1.0.1
 
 ## Step 6: Deploy your Docker image in Heroku ##
-Heroku will allow you to push your docker container on their server and to start it.
+Heroku allowed to push the docker container on their server and to start it (more information [here](https://github.com/becodeorg/BXL-Bouman-2.22/tree/master/content/05.deployment/4.Web_Application)).
+
+## Step 7: Document your API ##
+A clear readme was made to explain to the web developers where the API is hosted and how to interact with it.
+
+A ppt presentation is available at ... 
+
+## FAQ ##
+Hereby follow the answers to the main questions about the API.
+
+*What routes are available? With which methods?*
+
+*What kind of data is expected (How should they be formatted?*
+
+*What is mandatory or not?*
+
+*What is the output of each route in case of success?*
+
+*What is the output in case of error?*
 
 #### Date of Completion: 
 8/12/2020 (code)
