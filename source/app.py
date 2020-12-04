@@ -4,7 +4,7 @@ from flask import Flask,request, jsonify
 # I guess this is how to import Preprocessing
 from preprocessing.validation import DataFeatures
 from preprocessing.cleaning_data import preprocess
-from source.predict import prediction
+from predict.prediction import predict_price
 
 app = Flask(__name__)
 
@@ -37,8 +37,8 @@ def predict():
         # DataFeatures changes "10" to 10 (as example)
         validated = data.load(datadict)
         #get the required parameters
-        processeddata = cleaning_data.preprocess(validated)
-        prediction = prediction.predict_price(processeddata)
+        processeddata = preprocess(validated)
+        prediction = predict_price(processeddata)
         return jsonify(prediction)
         
 
