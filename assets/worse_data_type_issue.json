@@ -1,0 +1,20 @@
+{
+    "data": {
+            "area": "100b",
+            "property-type": "APARTMENT",
+            "rooms-number": 3,
+            "zip-code": 2650,
+            "land-area": 500,
+            "garden": true,
+            "garden-area": 200,
+            "equipped-kitchen": true,
+            "full-address": "Monseigneur Cardijnlaan 33/2 2650 Edegem",
+            "swimmingpool": false,
+            "furnished": false,
+            "open-fire": false,
+            "terrace": true,
+            "terrace-area": 10,
+            "facades-number": 2,
+            "building-state": "NEW"
+    }
+}
