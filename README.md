@@ -168,6 +168,17 @@ Hereby follow the answers to the main questions about the API.
 
 ### Highlights ###
 
+# Conclusions
+
+
+# Future steps
+Project is considered concluded and no additional work is not foreseen. However a few possible improvements are hereby suggested.
+
+On modelling part:
+1. scrapping more data online including also other key parameters (e.g. building construction year)
+1. make full use of other available reliable datasets (e.g. official statistics) to improve the model
+1. explore different subsets of data (e.g. by building type and status) to get accurate targeted results
+
 # Timeline (when): 
 2/12/2020 (start)
 8/12/2020 (code deliverable)
