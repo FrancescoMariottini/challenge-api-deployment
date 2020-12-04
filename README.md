@@ -16,7 +16,7 @@ Our [previous project](https://github.com/FrancescoMariottini/Belgium-prices-pre
 
 Project evalution is based on the compliance to the following criteria:
 
-|Indicator |Yes/No|
+|Criteria|Indicator|
 |---|---| 
 |Is complete|Your API works.|	
 ||Your API is wrapped in a Docker image.|
@@ -31,6 +31,18 @@ Project evalution is based on the compliance to the following criteria:
 
 # Development (how)
 Input requirements for the web developers were initially agreed with the other Becode teams. Then the team agreed on how to fulfill and split the required development steps among its members. Step 0 (team management) was added.
+
+0. Team organization
+1. Project preparation
+2. Pre-processing pipeline
+3. Fit your data!
+4. Create your API
+5. Create a Dockerfile to wrap your API
+6. Deploy your Docker image in Heroku
+7. 
+
+[previous project](https://github.com/FrancescoMariottini/Belgium-prices-prediction/settings)
+
 
 ## Input requirements
 Hereby follow the agreed requirements for the json to be provided by the web developers:
@@ -66,30 +78,38 @@ Output requirements were not strictly fixed but rather delegated to each team af
 }
 ```
 A HTTP status code is also provided in case of error.
+## Step 0: Team organization ##
+In the introduction meeting it emerged that team members were looking for an organisation to avoid overlaps and meet project requirements without rushing for it.
+A Trello board (Kanban template) was organised and team members agreed on how to split the required development steps. For each step was responsible person was chosen, support could be provided if requested.
+Morning meeting were scheduled to check the status of the project and plan the day activites. Afternon meetings were scheduled at lunch if morning tasks were completed to set up new goal.
+An interim review was set up on 4/12/20 to upload an already working version before refining it. 
+A trello list with general useful links, guidelines and tips was also provided.
+
 
 ## Step 1: Project preparation ##
-Demanded requirements were: 
-Create a folder to handle your project.
-Create a file app.py that will contain the code for your API.
-Create a folder preprocessing that will contain all the code to preprocess your data.
-Create a folder model that will contain your model.
-Create a folder predict that will contain all the code to predict a price.
-Step 2: Pre-processing pipeline
-This python module will contain all the code to preprocess your data. Make sure to think about what will be the format of your data to fit the model. Also, be sure to know which information HAVE to be there and which one can be empty (NAN).
+A repository was prepared to fullfill the required requirements: 
+1. Create a folder to handle your project.
+1. Create a file app.py that will contain the code for your API.
+1. Create a folder preprocessing that will contain all the code to preprocess your data.
+1. Create a folder model that will contain your model.
+1. Create a folder predict that will contain all the code to predict a price.
 
-In preprocessing folder:
+All these main folders, exclusively dedicated to the api, were created in a **source** folder. Additional folders (**assets**, **data**, **docs** and **outpus**) were created for the project.
 
-Create a file cleaning_data.py that will contain all the code that will be used to preprocess the data you will receive to predict a new price. (fill the nan, handle text data,...).
-Your file should contain a function preprocess() that will take a new house's data as input and return those data preprocessed as output.
-If your data doesn't contain the required information, you should return an error to the user.
-Step 3: Fit your data!
+
+## Step 2: Pre-processing pipeline ##
+This python module contains all the code to preprocess the data. The file cleaning_data.py contains all the code used to preprocess the data received to predict a new price (fill the nan, handle text data,...). The file contains a function preprocess() that takes a new house's data as input and returns those data preprocessed as output.
+If data doesn't contain the required information, an error is returned to the user.
+
+## Step 3: Fit your data! ##
 Fit your data to your model.
 
 In the predict folder:
 
 Create a file prediction.py that will contain all the code used to predict a new house's price.
 Your file should contain a function predict() that will take your preprocessed data as an input and return a price as output.
-Step 4: Create your API
+
+## Step 4: Create your API ##
 In your app.py file, create a Flask API that contains:
 
 A route at / that accept:
@@ -97,7 +117,8 @@ GET request and return "alive" if the server is alive.
 A route at /predict that accept:
 POST request that receives the data of a house in json format.
 GET request returning a string to explain what the POST expect (data and format).
-Step 5: Create a Dockerfile to wrap your API
+
+## Step 5: Create a Dockerfile to wrap your API ##
 To deploy your API, you will use Docker.
 
 Create a Dockerfile that creates an image with:
@@ -107,7 +128,8 @@ Flask
 All the other dependencies you will need
 All the files of your project in an /app folder that you will previously create.
 Run your app.py file with python
-Step 6: Deploy your Docker image in Heroku
+
+## Step 6: Deploy your Docker image in Heroku ##
 Heroku will allow you to push your docker container on their server and to start it.
 
 #### Date of Completion: 
