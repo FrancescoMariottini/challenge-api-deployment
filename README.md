@@ -16,14 +16,14 @@ Our [previous project](https://github.com/FrancescoMariottini/Belgium-prices-pre
 
 Project evalution is based on the compliance to the following criteria:
 
-Criteria	Indicator |	Yes/No
---- | ---
-1. Is complete	|Your API works.	
+|Indicator |	Yes/No
+---|--- 
+Is complete|Your API works.	
 |Your API is wrapped in a Docker image.
 |Pimp up the readme. (what, why, how, who).
 |Your model predict.
 |Your API is deployed on Heroku.
-2. Is good |The repo doesn't contain unnecessary files.
+Is good |The repo doesn't contain unnecessary files.
 |You used typing.	
 |The presentation is clean.	
 |The web-dev group understood well how your API works.
