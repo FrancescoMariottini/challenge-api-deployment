@@ -1,8 +1,9 @@
 # os module may be needed to get the PORT number from heroku
 import os
 from flask import Flask,request, jsonify
-import DataFeatures
-from source.preprocessing import cleaning_data
+# I guess this is how to import Preprocessing
+from preprocessing.validation import DataFeatures
+from preprocessing.cleaning_data import preprocess
 from source.predict import prediction
 
 app = Flask(__name__)
