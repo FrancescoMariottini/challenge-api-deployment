@@ -121,6 +121,7 @@ POST https://api.tobedefined.com/predict
 All strings are not case sensitive.
 
 Name|Type|Mandatory|Description|validation
+---|---|---|---|---
 area|int|yes|Amount of m² of the property| must be higher than 0
 property-type|string|yes| Type of the property| must be an "apartment", "house" or "others"   
 rooms-number|int|yes|The amount of rooms in the property| must be higher than 0
