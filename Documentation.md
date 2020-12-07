@@ -51,10 +51,10 @@ To get a prediction you need to provide several parameters, some are mandatory o
 
 ## Request Object
 
-{
-    "data": {
+{<br>
+    "data": {<br>
             "area": int,
-            "property-type": "APARTMENT" | "HOUSE" | "OTHERS",
+            "property-type": "APARTMENT" | "HOUSE" | "OTHERS",<br>
             "rooms-number": int,
             "zip-code": int,
             "land-area": Optional[int],
@@ -128,7 +128,7 @@ rooms-number|int|yes|The amount of rooms in the property| must be higher than 0
 zip-code|int|yes|postcode of the property | must be between 1000 and 9999
 land-area|int|no|Amount of m² of the whole plot (garden included)| must be higher than 0
 garden|bool|no|Incidcates wheter or not the property has a garden| 
-garden-area|int|Amount of m² of the garden|must be higher than 0
+garden-area|int|no|Amount of m² of the garden|must be higher than 0
 equipped-kitchen|bool|no|Incidcates wheter or not the property has an equipped kitchen|
 full-address|string|no|Full address of the property|
 swimmingpool|bool|no|Incidcates wheter or not the property has a swimmingpool|
@@ -137,11 +137,12 @@ open-fire|bool|no|Incidcates wheter or not the property an open fire installed|
 terrace|bool|no|Incidcates wheter or not the property a terrace|
 terrace-area|int|no|Amount of m² of the terrace| must be higher than 0
 facades-number|int|no|Amount of facades of the property|must be higher than 0
-building-state|string|no|Current state of the property| must be part of the following values ["NEW" | "GOOD" | "TO RENOVATE" | "JUST RENOVATED" | "TO REBUILD"]
+building-state|string|no|Current state of the property|["NEW" | "GOOD" | "TO RENOVATE" | "JUST RENOVATED" | "TO REBUILD"]
 
 # Return object 
 
 Name|Type|Mandatory|Description
+---|---|---|---
 prediction|float|no|The price predicted by our model based on the info you provided
 error|string|no|If something didn't go right in the prediction, we'll let you know through this message
 
