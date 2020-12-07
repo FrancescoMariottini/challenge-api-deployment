@@ -27,17 +27,23 @@ def predict():
         return response
 
     else :
-        datadict = request.get_json()['data']
-        # Validation expects feature names with _ iso -
+        try:
+            datadict = request.get_json()['data']
+        except:
+            errors = {
+                "error": {"data": "no 'data' element in root"}
+            }
+            return make_response(jsonify(errors), 400)
+        
+        # Validation expects feature names with '_' iso '-'
         datadict = {key.replace('-', '_'): value for key,
-                            value in datadict.items()}
+                    value in datadict.items()}
         data = DataFeatures()
         errors = data.validate(datadict)
-
         if errors:
             # change feature name(s) in error back to original
             errors = {key.replace('_', '-'): value for key,
-                            value in errors.items()}
+                        value in errors.items()}
             # conform to error format
             errors = {
                 "error": errors
