@@ -14,10 +14,10 @@ def load_files():
     global __data_columns
     global __model
 
-    with open("model/ml.pkl",'rb') as model_file :
+    with open("source/model/ml.pkl",'rb') as model_file :
         __model = pickle.load(model_file)
 
-    with open("model/columns.json","r") as f :
+    with open("source/model/columns.json","r") as f :
         __data_columns = json.load(f)['data_columns']
         __location = __data_columns[4:]
     
