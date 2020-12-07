@@ -53,33 +53,33 @@ To get a prediction you need to provide several parameters, some are mandatory o
 
 {<br>
     "data": {<br>
-            "area": int,
+            "area": int,<br>
             "property-type": "APARTMENT" | "HOUSE" | "OTHERS",<br>
-            "rooms-number": int,
-            "zip-code": int,
-            "land-area": Optional[int],
-            "garden": Optional[bool],
-            "garden-area": Optional[int],
-            "equipped-kitchen": Optional[bool],
-            "full-address": Optional[str],
-            "swimmingpool": Opional[bool],
-            "furnished": Opional[bool],
-            "open-fire": Optional[bool],
-            "terrace": Optional[bool],
-            "terrace-area": Optional[int],
-            "facades-number": Optional[int],
-            "building-state": Optional["NEW" | "GOOD" | "TO RENOVATE" | "JUST RENOVATED" | "TO REBUILD"]
-    }
-} 
+            "rooms-number": int,<br>
+            "zip-code": int,<br>
+            "land-area": Optional[int],<br>
+            "garden": Optional[bool],<br>
+            "garden-area": Optional[int],<br>
+            "equipped-kitchen": Optional[bool],<br>
+            "full-address": Optional[str],<br>
+            "swimmingpool": Opional[bool],<br>
+            "furnished": Opional[bool],<br>
+            "open-fire": Optional[bool],<br>
+            "terrace": Optional[bool],<br>
+            "terrace-area": Optional[int]<br>,
+            "facades-number": Optional[int],<br>
+            "building-state": Optional["NEW" | "GOOD" | "TO RENOVATE" | "JUST RENOVATED" | "TO REBUILD"]<br>
+    }<br>
+} <br>
 
 ## Response Object
 
-{
-    "price-wrapper": {
-            "prediction": Optional[float],
-            "error": Optional[str]
-    }
-}
+{<br>
+    "price-wrapper": {<br>
+            "prediction": Optional[float],<br>
+            "error": Optional[str]<br>
+    }<br>
+}<br>
 
 ## Example Request
 
@@ -93,28 +93,28 @@ POST https://api.tobedefined.com/predict
 
 
 
-{
-    "data": {
-            "area": 150,
-            "property-type": "APARTMENT",
-            "rooms-number": 2,
-            "zip-code": 1000,
-            "open-fire": true,
-            "terrace": false,
-            "terrace-area": 50,
-            "facades-number": 4,
-            "building-state":"TO RENOVATE"
-    }
-} 
+{<br>
+    "data": {<br>
+            "area": 150,<br>
+            "property-type": "APARTMENT",<br>
+            "rooms-number": 2,<br>
+            "zip-code": 1000,<br>
+            "open-fire": true,<br>
+            "terrace": false,<br>
+            "terrace-area": 50,<br>
+            "facades-number": 4,<br>
+            "building-state":"TO RENOVATE"<br>
+    }<br>
+} <br>
 // Note you can ommit some parameters in the Json file if they are `Optional`
 
 **return object**
 
-{
-    "price-wrapper": {
-            "prediction": 259451            
-    }
-}
+{<br>
+    "price-wrapper": {<br>
+            "prediction": 259451         <br>   
+    }<br>
+}<br>
 
 # Request object 
 
@@ -137,7 +137,7 @@ open-fire|bool|no|Incidcates wheter or not the property an open fire installed|
 terrace|bool|no|Incidcates wheter or not the property a terrace|
 terrace-area|int|no|Amount of m² of the terrace| must be higher than 0
 facades-number|int|no|Amount of facades of the property|must be higher than 0
-building-state|string|no|Current state of the property|["NEW" | "GOOD" | "TO RENOVATE" | "JUST RENOVATED" | "TO REBUILD"]
+building-state|string|no|Current state of the property|Must be one of these values: ["NEW", "GOOD", "TO RENOVATE", "JUST RENOVATED", "TO REBUILD"]
 
 # Return object 
 
