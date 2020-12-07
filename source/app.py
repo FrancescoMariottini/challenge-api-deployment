@@ -1,8 +1,14 @@
+"""Main API code
+"""
+
+import json
 import os
-from flask import Flask,request, jsonify , abort
-from preprocessing.validation import DataFeatures
-from preprocessing.cleaning_data import preprocess
-from predict.prediction import predict_price
+
+from flask import Flask,request, jsonify , make_response
+
+from source.predict.prediction import predict_price
+from source.preprocessing.cleaning_data import preprocess
+from source.preprocessing.validation import DataFeatures
 
 app = Flask(__name__)
 
@@ -13,46 +19,42 @@ def status():
 @app.route('/predict', methods=['POST','GET'])
 def predict():
     if request.method == 'GET' :
-        #returning a string to explain what the POST expect (data and format)
-        retjson = {
-            "area": 'int',
-            "property-type": 'APARTMENT | HOUSE | OTHERS',
-            "rooms-number": 'int',
-            "zip-code": 'int'
-                 }
-        return jsonify(retjson)
+        # returning a json to explain what the POST expect (data and format)
+        with open("source/preprocessing/reqspec.json", "r") as req_spec:
+            req_spec = req_spec.read()
+        response = make_response(req_spec, 200)
+        response.mimetype = "application/json"
+        return response
 
     else :
-        datadict = request.get_json()
+        datadict = request.get_json()['data']
         # Validation expects feature names with _ iso -
         datadict = {key.replace('-', '_'): value for key,
                             value in datadict.items()}
         data = DataFeatures()
         errors = data.validate(datadict)
 
-        # if errors:
-        #     # change feature name in error back to original
-        #     abort(BAD_REQUEST, str(errors).replace('_','-'))
-        # # DataFeatures changes "10" to 10 (as example)
-        # validated = data.load(datadict)
-        # #get the required parameters
-        # processeddata = preprocess(validated)
-        # prediction = predict_price(processeddata)
-        # return jsonify(prediction)
-
         if errors:
-            # change feature name in error back to original
-            abort(400, str(errors).replace('_','-'))
-        # DataFeatures changes "10" to 10 (as example)
+            # change feature name(s) in error back to original
+            errors = {key.replace('_', '-'): value for key,
+                            value in errors.items()}
+            # conform to error format
+            errors = {
+                "error": errors
+            }
+            # return as json with Bad Request status code
+            return make_response(jsonify(errors), 400)
+
+        # DataFeatures corrects "10" to 10 where needed
         validated = data.load(datadict)
-        #get the required parameters
-        #processeddata = preprocess(validated)
-        #prediction = predict_price(processeddata)
-        #return jsonify(prediction)
-        
-        predicted_price = { "Estimated price" : predict_price(validated)
+
+        # Preprocess doesn't do anyting now
+        processed = preprocess(validated)
+
+        predicted_price = {
+            "Estimated price" : predict_price(processed)
                           }
-        return jsonify(predicted_price)
+        return make_response(jsonify(predicted_price), 200)
         
 
 if __name__ == "__main__":
