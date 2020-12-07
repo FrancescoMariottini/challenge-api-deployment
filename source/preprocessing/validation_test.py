@@ -1,3 +1,6 @@
+""" A script for ad-hoc testing of the DataFeatures validation class
+"""
+
 from marshmallow import Schema, fields, validates, ValidationError
 from marshmallow.validate import Length, Range
 import json
@@ -31,7 +34,7 @@ class DataFeatures(Schema):
             raise ValidationError("This state doesn't exist, please select one bewteen: new, good, to renovate, just renovated or to rebuil")
 
 
-f = open("././assets/data_type_issue.json")
+f = open("././assets/validated.json")
 test_dict = json.load(f)['data']
 test_dict = {key.replace('-', '_'): value for key, value in test_dict.items()}
 
@@ -41,6 +44,7 @@ data = DataFeatures()
 
 errors = data.validate(test_dict)
 if errors:
+    print(type(errors))
     print("Errors:\n", errors, "\n")
 else:
     result = data.load(test_dict)

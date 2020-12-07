@@ -1,7 +1,11 @@
-FROM matthewfeickert/docker-python3-ubuntu:latest
+FROM ubuntu:latest
+RUN apt-get update -y \
+	&& apt-get install -y python3-pip \
+	&& rm -rf /var/lib/apt/lists/*
 RUN mkdir source
-COPY source/ /source
+COPY source /source
 WORKDIR /source
 RUN pip3 install -r requirements.txt
-CMD ["python3", "app.py"]
+WORKDIR /
+CMD export PYTHONPATH="${PYTHONPATH}:/" ; python3 source/app.py
 
