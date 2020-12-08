@@ -8,8 +8,9 @@ __location = None
 __data_columns = None
 __model = None
 
-def load_pickle(model_subtype: str = "OTHERS"):
-
+def load_files(model_subtype: str = "OTHERS"):
+    
+    global __data_columns
     global __model
     MODEL_SUBTYPES = ["APARTMENT", "HOUSE", "OTHERS"]
 
@@ -18,12 +19,8 @@ def load_pickle(model_subtype: str = "OTHERS"):
 
     with open("src/model/"+model_subtype.lower()+".pkl", 'rb') as model_file :
         __model = pickle.load(model_file)
-
-    
-def load_json() :
-    
-    global __data_columns
-    with open("source/model/columns.json","r") as f :
+  
+    with open("src/model/"+model_subtype.lower()+".json","r") as f :
         __data_columns = json.load(f)['data_columns']
     
     
@@ -36,26 +33,27 @@ def predict_price(input_data):
     :param rooms: number of rooms
     :return: predicted price value
     """
-    load_json()
-    load_pickle(input_data['property_type'])
+    
+    load_files(input_data['property_type'])
     
     input_data['log_area'] = np.log(input_data['area'])
     log_on_columns = ["garden_area", "terrace_area", "land_area", "area"]
 
     for c in log_on_columns:
-        input_data[c] = input_data[c].replace(to_replace=0, value=1)
-        input_data[c] =input_data[c].apply(np.log)
-            
+        # input_data[c] = input_data[c].apply(np.log)
+        input_data[c] = np.log(input_data[c])
+                
     try :
         loc_index = __data_columns.index(str(input_data['zip_code']))
     except :
         loc_index = -1
 
-    try :
+    '''try :
         prop_type_index = __data_columns.index(input_data['property_type'])
     except :
         prop_type_index = -1
-    
+    '''
+
     try :
         prop_state_index = __data_columns.index(input_data["building_state"])
     except :
@@ -75,9 +73,10 @@ def predict_price(input_data):
     x[10] = input_data["terrace_area"]
     x[11] = input_data["facades_number"]
 
-
+    '''
     if prop_type_index >= 0:
         x[prop_type_index] = 1
+        '''
     if loc_index >= 0:
         x[loc_index] = 1
     if prop_state_index >= 0:
