@@ -89,20 +89,11 @@ def get_linear_model(df: pd.DataFrame,
         f.write(json.dumps(columns))
     #FM 7/12/20  initialising model evalution to get error
     model_evaluation_obj = evaluation.Model_Evaluation(lin_reg)
-    ytrain_predictions, ytest_predictions = model_evaluation_obj.get_predictions(X_train, X_test)
+    ytrain_predictions, ytest_predictions, metrics = model_evaluation_obj.get_predictions(X_train, X_test)
     y_test, ytest_predictions = model_evaluation_obj.predict_model(X_train, y_train, X_test, y_test)
-    # FM 7/12/20  changing back to not log through exp before extracting error
-    #y_test, ytest_predictions = np.exp(y_test), np.exp(ytest_predictions)
-    biases = ytest_predictions - y_test
-    biases_dsc = biases.describe(percentiles=[0.975, 0.025])
-    mae = median_absolute_error(y_test, ytest_predictions)
-    me = max_error(y_test, ytest_predictions)
-    p025, p975 = biases_dsc['2.5%'], biases_dsc['97.5%']
-    metrics_values = [str(int(m)) for m in [len(biases), mae, me, p025, p975]]
-    metrics_keys = ['test_size', 'median_absolute_error', 'max_error', 'percentile025', 'percentile975']
-    text_stream = open("models_metrics.csv", 'w')
+    text_stream = open("models_metrics.csv", 'a')
     text_stream.write(",".join([pkl_filename]+[m for m in metrics_values]) + "\n")
-    return lin_reg, dict(zip(metrics_keys, metrics_values))
+    return lin_reg, metrics
 
 
 #TESTING ON WINDOWS (to exclude as comment when running Jupyter NB)
