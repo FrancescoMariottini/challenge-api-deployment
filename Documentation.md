@@ -1,6 +1,6 @@
 TODO 
 
-3. double check Jsons exposed
+. double check Jsons exposed and return format.
 
 # Title of the API
 
