@@ -31,7 +31,7 @@ To get a prediction you need to provide several parameters, some are mandatory o
 - Request Object - None
 - Response Format - string
 - API Version - 1.0
-- Resource URI - https://roberta-eliza.herokuapp.com
+- Resource URI - http://roberta-eliza.herokuapp.com
 
 # roberta-eliza.herokuapp.com/Predict 
 
@@ -47,12 +47,12 @@ To get a prediction you need to provide several parameters, some are mandatory o
 - Response Format - Json
 - Response Object - price-wrapper
 - API Version - 1.0
-- Resource URI - https://roberta-eliza.herokuapp.com
+- Resource URI - http://roberta-eliza.herokuapp.com
 
 ## Request Object
 
-{<br>
-    &nbsp"data": {<br>
+{<br />
+    "data": {<br />
             "area": int,<br>
             "property-type": "APARTMENT" | "HOUSE" | "OTHERS",<br>
             "rooms-number": int,<br>
