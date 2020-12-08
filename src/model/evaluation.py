@@ -62,8 +62,17 @@ class Model_Evaluation:
         plt.title('Residuals Distribution Plot\n')
         # histogram of the residuals. It tells how well the residuals are distributed from proposed model
         # FM 8/12/20 distplot deprecated to be replaced
-        sns.distplot(y_test - ytest_predictions)
+        residuals = ytest_predictions - y_test
+        # histogram of the residuals. It tells how well the residuals are distributed from proposed model
+        # FM 8/12/20 distplot deprecated to be replaced
+        sns.distplot(residuals)
         plt.tight_layout()
         plt.show()
+        residuals_dsc = residuals.describe(percentiles=[0.975, 0.025])
+        mae = median_absolute_error(y_test, ytest_predictions)
+        me = max_error(y_test, ytest_predictions)
+        p025, p975 = residuals_dsc['2.5%'], residuals_dsc['97.5%']
+        metrics_values = [str(int(m)) for m in [len(residuals), mae, me, p025, p975]]
+        metrics_keys = ['test_size', 'median_absolute_error', 'max_error', 'percentile025', 'percentile975']
         # FM 7/12/20  return error
-        return y_test, ytest_predictions
+        return y_test, ytest_predictions, dict(zip(metrics_keys, metrics_values))
