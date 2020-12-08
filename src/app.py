@@ -6,9 +6,9 @@ import os
 
 from flask import Flask,request, jsonify , make_response
 
-from src.predict.prediction import predict_price
-from src.preprocessing.cleaning_data import preprocess
-from src.preprocessing.validation import DataFeatures
+from predict.prediction import predict_price
+from preprocessing.cleaning_data import preprocess
+from preprocessing.validation import DataFeatures
 
 app = Flask(__name__)
 
@@ -20,7 +20,7 @@ def status():
 def predict():
     if request.method == 'GET' :
         # returning a json to explain what the POST expect (data and format)
-        with open("src/preprocessing/reqspec.json", "r") as req_spec:
+        with open("source/preprocessing/reqspec.json", "r") as req_spec:
             req_spec = req_spec.read()
         response = make_response(req_spec, 200)
         response.mimetype = "application/json"
@@ -57,10 +57,18 @@ def predict():
         # Preprocess doesn't do anyting now
         processed = preprocess(validated)
 
+        #loading the model_metrics
+        #model_metrics = pd.read_csv('models_metrics'.csv)
+
         predicted_price = {
-            "Estimated price" : predict_price(processed)
+            prediction: {
+                "Estimated price" : predict_price(processed),
+                #"Accuracy" : ['test_size' :test_size, "median_absolute_error" :median_absolute_error, 'max_error' : max_error,
+                #               'percentile025':percentile025, 'percentile975': percentile975 ],
+                        },
+                'Message': 200
                           }
-        return make_response(jsonify(predicted_price), 200)
+        return make_response(jsonify(predicted_price))
         
 
 if __name__ == "__main__":
@@ -72,3 +80,4 @@ if __name__ == "__main__":
     # You will also define the host to "0.0.0.0" because localhost
     # will only be reachable from inside de server.
     app.run(host="0.0.0.0", threaded=True, port=port)
+
