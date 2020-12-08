@@ -1,0 +1,130 @@
+"""Wrap-up module for models creation"""
+
+
+# import created modules
+import model.modeling as modeling
+import model.evaluation as evaluation
+from model.preprocessing_dataset import DataCleaning
+
+# import standard libraries
+import os
+import numpy as np
+import pandas as pd
+
+#import scikit modules
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import median_absolute_error
+from sklearn.metrics import max_error
+
+#import typing
+from typing import List
+from typing import Dict
+
+#import pickle to save the model
+import pickle
+import json
+
+#['src','land_surface', 'facades_number', 'swimming_pool_has','postcode_median_price',
+#              'property_subtype_median_facades_number', 'building_state_agg_median_price']
+
+#FM 8/12/2020 parameters to be checked in Joachim modeml
+FEATURES = [""]
+NUM_CV_FOLDS = 3
+DEGREE_MAX = 3
+
+#FM 7/12/20 defining allowed model subtypes
+TRAINING_TO_INPUT_COLUMNS = {"postcode":"zip-code", "is_house":"property-type",
+                             "rooms_number":"rooms-number"}
+#FM 7/12/20 defining dummies to be dropped. Others removed since filtering
+TARGET = "price"
+DUMMIES_TO_DROP = ['9999'] #, 'OTHERS']
+
+#FM 7/12/20 11:59 updated dynamic filepath following new structure
+#FM 8/12/2020 different ways for linux & win really necessary ?
+"""DEFAULT VALUES SETUP"""
+DATASET_CSV_FILEPATH = os.path.join(os.getcwd(), 'dataset', 'clean_dataset.csv')
+MODEL_FOLDER = os.path.join(os.getcwd(), 'src', 'model')
+REAL_ESTATE_CSV_FILEPATH = os.path.join(os.getcwd(), 'dataset','clean_dataset.csv')
+CLEANED_CSV_FILEPATH = os.path.join(os.getcwd(), 'outputs', 'df_after_cleaning.csv')
+#paths for windows users
+DATASET_CSV_FILEPATH_WIN = os.getcwd() + r"\dataset" + "\clean_dataset.csv"
+MODEL_FOLDER_WIN = os.getcwd() + r"\src" + r"\model"
+REAL_ESTATE_CSV_FILEPATH_WIN = os.getcwd() + r"\dataset" + "\clean_dataset.csv"
+CLEANED_CSV_FILEPATH_WIN = os.getcwd() + r"\outputs" + "\df_after_cleaning.csv"
+
+def get_linear_model(df: pd.DataFrame,
+                     target: str = TARGET,
+                     model_subtype: str = "OTHERS", #FM 7/12/20 model subtype added
+                     training_to_input_columns : Dict[str, str] = TRAINING_TO_INPUT_COLUMNS,
+                     dummies_to_drop: List[str] = DUMMIES_TO_DROP,
+                     model_folder: str = MODEL_FOLDER):
+
+    # Use One Hot Encoding For postcodes
+    dummies = pd.get_dummies(df, prefix='', prefix_sep='')
+    #FM 7/12/20 fixed list of dummies replaced with variable (no drop of OTHERS if filtering)
+    df = dummies.drop(dummies_to_drop, axis='columns')
+    df.rename(columns= training_to_input_columns, inplace=True)
+    X = df.drop([target], axis='columns')
+    y = df.price
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=10)
+    # Returns a linear regression model fitted with Ordinary Least Squares method
+    lin_reg = modeling.OLS_linear_regression(X_train, y_train)
+    # save model through pickle
+    # FM 7/12/20 filename based on model_type
+    # FM 7/12/20 lower character really necessary ?
+    pkl_filename = model_subtype.lower()+'.pkl'
+    with open(os.path.join(model_folder, pkl_filename), 'wb') as model_pkl:
+        pickle.dump(lin_reg, model_pkl)
+    #FM 8/12/20 Ankita please clarify why needed
+    columns = {'data_columns': [col for col in X.columns]}
+    with open(os.path.join(model_folder, "columns.json"), "w") as f:
+        f.write(json.dumps(columns))
+
+    #FM 7/12/20  initialising model evalution to get error
+    model_evaluation_obj = evaluation.Model_Evaluation(lin_reg)
+    ytrain_predictions, ytest_predictions = model_evaluation_obj.get_predictions(X_train, X_test)
+    y_test, ytest_predictions = model_evaluation_obj.predict_model(X_train, y_train, X_test, y_test)
+    # FM 7/12/20  changing back to not log through exp before extracting error
+    #y_test, ytest_predictions = np.exp(y_test), np.exp(ytest_predictions)
+    biases = ytest_predictions - y_test
+    biases_dsc = biases.describe(percentiles=[0.975, 0.025])
+    mae = median_absolute_error(y_test, ytest_predictions)
+    me = max_error(y_test, ytest_predictions)
+    p025, p975 = biases_dsc['2.5%'], biases_dsc['97.5%']
+    metrics_values = [str(int(m)) for m in [len(biases), mae, me, p025, p975]]
+    metrics_keys = ['test_size', 'median_absolute_error', 'max_error', 'percentile025', 'percentile975']
+    text_stream = open("models_metrics.csv", 'w')
+    text_stream.write(",".join([pkl_filename]+[m for m in metrics_values]) + "\n")
+    return lin_reg, dict(zip(metrics_keys, metrics_values))
+
+
+#TESTING ON WINDOWS (to exclude as comment when running Jupyter NB)
+
+dc = DataCleaning(csv_filepath = REAL_ESTATE_CSV_FILEPATH_WIN)
+
+features = None
+model_subtype = "HOUSE"
+log_on_columns = ["garden_area", "terrace_area", "land_surface", "area"]
+
+df, df_outliers = dc.get_preprocessed_dataframe(cleaned_csv_path= CLEANED_CSV_FILEPATH_WIN,
+                                                features= features,
+                                                model_subtype= model_subtype,
+                                                log_on_columns= log_on_columns)
+
+lin_reg, metrics = get_linear_model(df, model_subtype="APARTMENT")
+
+print(metrics)
+
+#for notebook
+"""
+print(df_outliers)
+print(df.info())
+print(describe_with_tukey_fences(df))
+"""
+
+
+
+
+
+
+

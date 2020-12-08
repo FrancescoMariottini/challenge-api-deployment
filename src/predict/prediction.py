@@ -1,9 +1,6 @@
-"""Prediction engine
-"""
-import json
 import pickle
-
 import numpy as np
+import json
 from sklearn.linear_model import LinearRegression
 #import joblib
 
@@ -11,25 +8,33 @@ __location = None
 __data_columns = None
 __model = None
 
-def load_files():
+#FM 7/12/20 available model subtypes
+MODEL_SUBTYPES = ["APARTMENT", "HOUSE", "OTHERS"]
+
+def load_files(model_subtype: str = "OTHERS"):
 
     global __location
     global __data_columns
     global __model
 
-    with open("source/model/ml.pkl",'rb') as model_file :
+    # FM 7/12/20 available model subtypes
+    if model_subtype not in MODEL_SUBTYPES:
+        model_subtype = "OTHERS"
+
+    # FM 7/12/20 load model depending on type
+    with open("src/model/"+model_subtype.lower()+".pkl", 'rb') as model_file :
         __model = pickle.load(model_file)
 
-    with open("source/model/columns.json","r") as f :
+    with open("src/model/columns.json", "r") as f :
         __data_columns = json.load(f)['data_columns']
         __location = __data_columns[4:]
     
     
 def predict_price(input_data):
     """
-    Function predicts the price with input data.
-    :param property_type: property type data
-    :param zip-code: postcode data
+    Function predicts the price with input dataset.
+    :param property_type: property type dataset
+    :param zip-code: postcode dataset
     :param area: area(in sq.metre)
     :param rooms: number of rooms
     :return: predicted price value

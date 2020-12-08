@@ -8,7 +8,7 @@ from sklearn.preprocessing import PolynomialFeatures, StandardScaler, RobustScal
 def OLS_linear_regression(X_train: np.ndarray, y_train: np.ndarray) -> LinearRegression:
     """
     Returns a linear regression model fitted with Ordinary Least Squares method
-    :param X_train: training data (features)
+    :param X_train: training dataset (features)
     :param y_train: training target
     :return the fitted model
     """
@@ -20,7 +20,7 @@ def OLS_linear_regression(X_train: np.ndarray, y_train: np.ndarray) -> LinearReg
 def OLS_linear_regression_scaled(X_train: np.ndarray, y_train: np.ndarray, scaling: str) -> Pipeline:
     """
     Returns a linear regression model fitted with Ordinary Least Squares method after a particular scaling
-    :param X_train: training data (features)
+    :param X_train: training dataset (features)
     :param y_train: training target
     :param scaling: type of scaler to be used
     :return the fitted model
@@ -38,8 +38,8 @@ def OLS_linear_regression_scaled(X_train: np.ndarray, y_train: np.ndarray, scali
 
 def plot_OLS_lin_reg_r2_curves(X_train: np.ndarray, y_train: np.ndarray, num_cv_folds: int) -> None:
     """
-    Plots learning curves (R² score) based on training data and k-folds cross-validation
-    :param X_train: training data (features)
+    Plots learning curves (R² score) based on training dataset and k-folds cross-validation
+    :param X_train: training dataset (features)
     :param y_train: training target
     :param num_cv_folds: number of folds for the cross-validation of the model
     """
@@ -71,8 +71,8 @@ def plot_OLS_lin_reg_r2_curves(X_train: np.ndarray, y_train: np.ndarray, num_cv_
 
 def plot_OLS_lin_reg_MSE_curves(X_train: np.ndarray, y_train: np.ndarray, num_cv_folds: int) -> None:
     """
-    Plots learning curves (Mean Squared Error) based on training data and k-folds cross-validation
-    :param X_train: training data (features)
+    Plots learning curves (Mean Squared Error) based on training dataset and k-folds cross-validation
+    :param X_train: training dataset (features)
     :param y_train: training target
     :param num_cv_folds: number of folds for the cross validation
     """
@@ -104,9 +104,9 @@ def plot_OLS_lin_reg_MSE_curves(X_train: np.ndarray, y_train: np.ndarray, num_cv
 
 def plot_poly_reg_validation_curves(X_train: np.ndarray, y_train: np.ndarray, num_cv_folds: int, degree_max: int) -> None:
     """
-    Plots validation curves (R² score) based on training data and k-folds cross-validation for different
+    Plots validation curves (R² score) based on training dataset and k-folds cross-validation for different
     degrees of Polynomial Regression
-    :param X_train: training data (features)
+    :param X_train: training dataset (features)
     :param y_train: training target
     :param num_cv_folds: number of folds for the cross validation
     :param degree_max: maximal degree of the polynomial models to validate

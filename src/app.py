@@ -6,9 +6,9 @@ import os
 
 from flask import Flask,request, jsonify , make_response
 
-from source.predict.prediction import predict_price
-from source.preprocessing.cleaning_data import preprocess
-from source.preprocessing.validation import DataFeatures
+from src.predict.prediction import predict_price
+from src.preprocessing.cleaning_data import preprocess
+from src.preprocessing.validation import DataFeatures
 
 app = Flask(__name__)
 
@@ -20,7 +20,7 @@ def status():
 def predict():
     if request.method == 'GET' :
         # returning a json to explain what the POST expect (data and format)
-        with open("source/preprocessing/reqspec.json", "r") as req_spec:
+        with open("src/preprocessing/reqspec.json", "r") as req_spec:
             req_spec = req_spec.read()
         response = make_response(req_spec, 200)
         response.mimetype = "application/json"

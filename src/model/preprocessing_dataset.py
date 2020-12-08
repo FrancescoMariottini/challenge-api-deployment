@@ -10,16 +10,7 @@ pd.options.display.max_rows = 20
 pd.options.display.max_columns = None
 
 """DEFAULT VALUES SETUP"""
-REAL_ESTATE_CSV_FILEPATH = os.path.join(os.getcwd(), 'data','clean_dataset.csv')
-REAL_ESTATE_SB_CSV_FILEPATH = os.path.join(os.getcwd(), 'assets', 'outputs', 'df_with_statbel.csv')
-REAL_ESTATE_SB_CSV_FILEPATH = os.path.join(os.getcwd(), 'assets', 'outputs', 'df_with_statbel_apartments.csv')
-CLEANED_CSV_FILEPATH = os.path.join(os.getcwd(), 'assets', 'outputs', 'df_after_cleaning.csv')
-
-#paths for windows users
-REAL_ESTATE_CSV_FILEPATH_WIN = os.path.dirname(os.getcwd()) + r"\data" + "\clean_dataset.csv"
-REAL_ESTATE_SB_CSV_FILEPATH_WIN = os.path.dirname(os.getcwd()) + r"\assets" + r"\outputs" + "df_with_statbel.csv"
-REAL_ESTATE_SB_CSV_FILEPATH_WIN = os.path.dirname(os.getcwd()) + r"\assets" + r"\outputs" + "df_with_statbel_apartments.csv"
-CLEANED_CSV_FILEPATH_WIN = os.path.dirname(os.getcwd()) + r"\assets" + r"\outputs" + "df_after_cleaning.csv"
+#FM 8/12/20 filepaths moved to models_creation.py
 
 # for terrace and garden it will be double checked if their related boolean is True when area is 0
 COLUMNS_NAN_REPLACE_WITH = {"terrace_area": 0, "garden_area": 0, "facades_number": 0}
@@ -29,10 +20,10 @@ OUTLIERS_METHODS = ["fence_tukey_min", "fence_tukey_max"]  # , "5%", "95%"]
 # boolean (onlt two distinct values) are excluded automatically as not being np.numeric
 # columns with prevalent nan values (previously filled with zero) excluded:
 # garden_area, terrace_area, land_surface, facades_number
-COLUMNS_OUTLIERS_IGNORE = ["facades_number", "garden_area", "postcode", "source", "terrace_area", "land_surface",
+COLUMNS_OUTLIERS_IGNORE = ["facades_number", "garden_area", "postcode", "src", "terrace_area", "land_surface",
                            "price_m_by_postcode", "latitude", "longitude"]
 # during the profiling dominant values found in equipped kitchen (true, 83.7%), furnished (False, 96.3%), Open Fire (False, 93.5%)
-# columns with a dominant value (inc. source and swimming pool) are excluded from duplicates check.
+# columns with a dominant value (inc. src and swimming pool) are excluded from duplicates check.
 # related boolean columns (e.g. garden_has) are also excluded.
 # region is excluded having already postcode
 # building_state_agg is excluded since aggregation of different approaches from different sources.
@@ -45,10 +36,14 @@ COLUMNS_GROUPED_BY = {"facades_number": "property_subtype"} #not neeeded by Anki
 COLUMNS_TO_REPLACE = ["facades_number"]
 GROUPBY_AGGREGATORS = [np.median]  # [min,max,np.mean,np.median,len]
 AGGREGATOR_COLUMNS = {min: "min", max: "max", np.mean: "mean", np.median: "median", len: "len"}
-
+#FM 7/12/20 defining allowed model subtypes
+MODEL_SUBTYPES = ["APARTMENT", "HOUSE", "OTHERS"]
+OTHER_PROPERTY_SUBTYPES = ["OTHER_PROPERTY", "MIXED_USE_BUILDING"]
+FEATURES_MANDATORY = ["area", "house_is", "rooms_number", "postcode"]
+TARGET = "price"
+LOG_ON_COLUMNS = ["garden_area", "terrace_area", "land_surface", "price", "area"]
 # Not used yet
 REPORT_HTML_FILEPATH = os.getcwd() + "\\reports" + "\\df_before_cleaning.html"
-
 
 def get_columns_with_nan(df: pd.DataFrame) -> List[str]:
     """
@@ -156,17 +151,18 @@ def add_aggregated_columns(df: pd.DataFrame, group_parameters: Dict[str, str] = 
 
 class DataCleaning:
     def __init__(self,
-                 csv_filepath: str = REAL_ESTATE_CSV_FILEPATH,
+                 csv_filepath: str, #FM 8/12/20 replaced with mandatory
+                 cleaned_csv_path: str = None, #FM 8/12/20 default replaced with None
                  columns_nan_replace_with: Dict[str, int] = COLUMNS_NAN_REPLACE_WITH,
                  columns_duplicates_check: List[str] = COLUMNS_DUPLICATES_CHECK,
                  columns_outliers_ignore: List[str] = COLUMNS_OUTLIERS_IGNORE,
                  outliers_methods: List[str] = OUTLIERS_METHODS,
-                 cleaned_csv_path: str = CLEANED_CSV_FILEPATH,
+
                  property_subtype: str = None,
                  report_html_filepath: str = REPORT_HTML_FILEPATH, #future release (profiling used for preliminary analysis)
                  ):
         """
-        Initialise the data cleaning class
+        Initialise the dataset cleaning class
         :param csv_filepath: path to the input csv file
         :param columns_nan_replace_with: columns for which nan will be replaced
         :param columns_duplicates_check: columns used as subset for checking duplicates
@@ -182,15 +178,19 @@ class DataCleaning:
         :argument: outliers: see get_outliers() method
         """
         self.df_0: pd.DataFrame = pd.read_csv(csv_filepath)
-        if property_subtype is None:
-            self.df_0 = self.df_0[self.df_0.property_subtype != "MIXED_USE_BUILDING"]
-        else:
+        #FM 8/12/20 mixed used building dealt later
+        # if property_subtype is None:
+            #FM 8/12/2020 MIXED_USE_BUILDING removed for all cases
+            # self.df_0 = self.df_0[self.df_0.property_subtype != "MIXED_USE_BUILDING"]
+        if property_subtype is not None:
             self.df_0 = self.df_0[self.df_0.property_subtype == property_subtype]
 
         self.df_out: pd.DataFrame = self.df_0.copy(deep=True)
         self.columns_with_nan: List[str] = []
         self.index_removed_by_process: Dict[str, List] = {}
         self.outliers = pd.DataFrame(columns=["column", "method", "count", "%", "first_outlier", "index"])
+        #FM 8/12/20 transformations recording, time could be added
+        self.converters = pd.DataFrame(columns=["column","method","description"])
 
         self.columns_nan_replace_with = columns_nan_replace_with
         self.columns_duplicates_check = columns_duplicates_check
@@ -292,8 +292,54 @@ class DataCleaning:
             self.index_removed_by_process["outliers_removed"]: List = index_dropped
             self.df_out = df_out
         return df_out, index_dropped
+    
+    def preprocess_features(self, df_before: pd.DataFrame = None,
+                            features: List[str] = None,
+                            target: str = TARGET,
+                            model_subtype: str = "OTHERS",
+                            other_property_subtypes: List[str] = OTHER_PROPERTY_SUBTYPES,
+                            log_on_columns: List[str] = LOG_ON_COLUMNS):
+        #FM 8/12/20 future: partly to be moved to aggregated columns
+        if df_before is None:
+            df_before = self.df_out
+        #8/12/20 adding main features if not inserted
+        if features == None:
+            features = df_before.columns.to_list()
+            features.remove(target)
+        for f in FEATURES_MANDATORY:
+            if f not in features:
+                features += [f]
+        df_out = df_before.copy(deep=True)
+        # postcode_stats contains the no. of properties in each postcode
+        postcode_stats = df_out['postcode'].value_counts(ascending=False)
+        # Any location having less than 10 dataset points should be tagged as "9999" location.
+        # This way number of categories can be reduced by huge amount.
+        # Later on when we do one hot encoding, it will help us with having fewer dummy columns
+        postcode_value_less_than_10 = postcode_stats[postcode_stats <= 10]
+        df_out['postcode'] = df_out['postcode'].apply(lambda x: '9999' if x in postcode_value_less_than_10 else x)
+        df_out['house_is'] = df_out['house_is'].apply(lambda x: "APARTMENT" if x == False else "HOUSE")
+        df_out.loc[df_out['property_subtype'].isin(other_property_subtypes), "house_is"] = "OTHERS"
+        # Drop the features which are irrelevant as per chi - square
+        features.append(target)
+        df_out = df_out.loc[:, features]
+        # FM 7/12/20 filtering dataframe before hot encoding
+        if model_subtype not in MODEL_SUBTYPES:
+            print(f'{model_subtype} model not found, OTHERS model used. Available models are:')
+            print(",".join([m for m in MODEL_SUBTYPES]))
+            model_subtype = "OTHERS"
+        df_out = df_out.loc[df_out['house_is'] == model_subtype, :]
+        self.converters.append({"column": "house_is", "method": "type aggregation", "description": "to use submodel"}, ignore_index=True)
+        for c in log_on_columns:
+            df_out[c] = df_out[c].replace(to_replace=0, value=1)
+            df_out[c] =df_out[c].apply(np.log)
+            self.converters.append({"column":c, "method":"log", "description":"to improve model" }, ignore_index=True)
+        return df_out
+        
 
-    def get_cleaned_dataframe(self, cleaned_csv_path: str = None) -> (pd.DataFrame, pd.DataFrame):
+    def get_preprocessed_dataframe(self, cleaned_csv_path: str = None,
+                                   features: List[str] = FEATURES_MANDATORY,
+                                   model_subtype: str = "OTHERS",
+                                   log_on_columns: List[str] = LOG_ON_COLUMNS) -> (pd.DataFrame, pd.DataFrame):
         """
         Wrap-up method to clean the table and provide the main outputs in one line
         :param cleaned_csv_path: output path for the csv file
@@ -312,66 +358,10 @@ class DataCleaning:
         df_outliers = self.get_outliers()
         #self.df_out, index_dropped = self.drop_outliers() #not dropping won't affect too much the accuracy
         #print(f"{len(index_dropped)} Dropped outliers, shape: {self.df_out.shape}")
+        #8/12/2020 adding preprocessing
+        self.df_out = self.preprocess_features(features= features, model_subtype= model_subtype,
+                                               log_on_columns = log_on_columns)
         if cleaned_csv_path is not None:
             self.df_out.to_csv(cleaned_csv_path)
         return self.df_out, df_outliers
-
-      
-INPUTS_NAN_REPLACE_WITH = {"terrace_area": 0, "garden_area": 0, "facades_number": 0}
-INPUTS_USED = ["area", "property-type", "rooms-number", "zip-code"]
-INPUTS_RANGE = {"area":(0, 9999), "rooms-number":(0,99), "zip-code":(1000,9999)}
-
-_TEST = {"area": 90,
-"property-type": "APARTMENT",
-"rooms-number": 5,
-"zip-code": 1000,
-"garden": True,
-"land-area": 400,
-"garden-area": 20,
-"equipped-kitchen": True,
-"full-address": "Avenue something",
-"swimmingpool": True,
-"furnished": True,
-"open-fire": True,
-"terrace": True,
-"terrace-area": 5,
-"facades-number": 2,
-"building-state": "GOOD"
-}
-
-def get_features(inputs: dict,
-                 inputs_used: dict = INPUTS_USED,
-                 inputs_nan_replace_with: dict = INPUTS_NAN_REPLACE_WITH, #for now skipped for mandatory
-                 inputs_range: dict = INPUTS_RANGE) -> dict:
-    keys_to_delete = []
-    for key in inputs.keys():
-        if key not in inputs_used:
-            #storing first to not change size during iteration
-            keys_to_delete.append(key)
-        elif key in inputs_range.keys():
-            min, max = inputs_range[key]
-            if inputs[key] < min:
-                inputs[key] = min
-            elif inputs[key] > max:
-                inputs[key] = max
-    for key in keys_to_delete:
-        del inputs[key]
-    return inputs
-
-
-#TESTING ON WINDOWS (to exclude as comment when running Jupyter NB)
-print(_TEST)
-output = get_features(_TEST)
-print(output)
-
-#TESTING ON WINDOWS (to exclude as comment when running Jupyter NB)
-"""
-dc = DataCleaning(csv_filepath = REAL_ESTATE_CSV_FILEPATH_WIN, #REAL_ESTATE_SB_CSV_FILEPATH_WIN
-                    property_subtype = None #APARTMENT_BLOCK
-                  )
-df, df_outliers = dc.get_cleaned_dataframe(cleaned_csv_path = CLEANED_CSV_FILEPATH_WIN)
-print(df_outliers)
-print(df.info())
-print(describe_with_tukey_fences(df))
-"""
 
