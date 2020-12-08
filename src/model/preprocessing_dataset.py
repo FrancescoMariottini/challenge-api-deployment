@@ -39,7 +39,7 @@ AGGREGATOR_COLUMNS = {min: "min", max: "max", np.mean: "mean", np.median: "media
 #FM 7/12/20 defining allowed model subtypes
 MODEL_SUBTYPES = ["APARTMENT", "HOUSE", "OTHERS"]
 OTHER_PROPERTY_SUBTYPES = ["OTHER_PROPERTY", "MIXED_USE_BUILDING"]
-FEATURES_MANDATORY = ["area", "house_is", "rooms_number", "postcode"]
+FEATURES_MANDATORY = ["area", "rooms_number", "postcode"]
 TARGET = "price"
 LOG_ON_COLUMNS = ["garden_area", "terrace_area", "land_surface", "area"]
 # Not used yet
