@@ -6,7 +6,7 @@ from marshmallow.validate import Length, Range
 import json
 
 class DataFeatures(Schema):
-    area = fields.Int(required=True)
+    area = fields.Int(required=True,validate=Range(min=1))
     property_type = fields.Str(required=True, validate=Length(max=30))
     rooms_number = fields.Int(required=True,validate=Range(min=1))
     zip_code = fields.Int(required=True, validate=Range(min=1000, max=9999))
