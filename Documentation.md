@@ -9,14 +9,14 @@ To get a prediction you need to provide several parameters, some are mandatory o
 ## Summary
 
 1. Requests<br>
-1.1. [Alive](#robertaelizaherokuappcom)<br>
+1.1. [Alive](#alive)<br>
 1.2. Predict<br>
 2. Objects<br>
 2.1. Request object <br>
 2.2. Response object<br>
 3. Errors<br>
 
-# roberta-eliza.herokuapp.com/
+# Alive
 
 ## Allowed HTTP Methods
 
@@ -28,7 +28,7 @@ To get a prediction you need to provide several parameters, some are mandatory o
 - Request Object - None
 - Response Format - string
 - API Version - 1.0
-- Resource URI - http://roberta-eliza.herokuapp.com
+- Resource URI - roberta-eliza.herokuapp.com/
 
 # roberta-eliza.herokuapp.com/Predict 
 
