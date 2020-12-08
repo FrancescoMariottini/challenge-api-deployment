@@ -41,7 +41,7 @@ MODEL_SUBTYPES = ["APARTMENT", "HOUSE", "OTHERS"]
 OTHER_PROPERTY_SUBTYPES = ["OTHER_PROPERTY", "MIXED_USE_BUILDING"]
 FEATURES_MANDATORY = ["area", "house_is", "rooms_number", "postcode"]
 TARGET = "price"
-LOG_ON_COLUMNS = ["garden_area", "terrace_area", "land_surface", "price", "area"]
+LOG_ON_COLUMNS = ["garden_area", "terrace_area", "land_surface", "area"]
 # Not used yet
 REPORT_HTML_FILEPATH = os.getcwd() + "\\reports" + "\\df_before_cleaning.html"
 
