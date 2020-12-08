@@ -2,75 +2,54 @@ from typing import Dict, Optional, Union
 import pandas as pd
 import json
 
-def preprocess(house_data: Optional[Dict[str, Union[int, bool, str]]] = None) -> Union[Dict[str, Union[int, bool, str]], str]:
+def preprocess(validated: Optional[Dict[str, Union[int, bool, str]]] = None) -> Dict[str, Union[int, str]]:
 	'''Takes the parsed and validated json data provided in the request
-	and returns a dictionary that conforms to the X input features of
-	our model.
-	:house_data: the validated dictionary of the request
+	and returns a dictionary that conforms to the input features of
+	our model. Dummy creation happens in prediction.py.
+	:validated: the validated dictionary of the request
 	'''
 
-	# # create a dataframe out of the request for easier manipulation
-	# # ensure the right dummies can be creatd by adding an observation
-	# # with inverse booleans	
-	# for key, value in house_data.items():
-	# 	if type(value) == bool:
-	# 		house_data[key] = [value, not value]
-	# 	else:
-	# 		house_data[key] = [value, value]
+	# enforce notation for compatibility with our model
+	processed = validated
+	processed['property_type'] = processed['property_type'].upper()
+	try:
+		processed['building_state'] = processed['building_state'].lower()
+	except:
+		pass
 
-	# request = pd.DataFrame.from_dict(house_data)
+	processed = {
+		key.replace('_', '-'): value for key, value in processed.items()
+		}
 
-
-	# # dummy encode categoricals
-	# dummies = ["property_type", "zip_code", "garden",
-	# 				"equipped_kitchen", "swimmingpool",
-	# 				"furnished", "open_fire", "terrace",
-	# 				"facades_number", "building_state"]
-	# request = pd.get_dummies(data = request, columns = dummies,
-	# 							prefix_sep = '')
+	processed = {
+		key: int(value) if type(value) == bool else value for \
+		key, value in processed.items()
+		}
 
 
-	# # adopt naming used in our model ('-' iso '_')
-	# bool_rename = {"gardenTrue": "garden",
-	# 			"equipped_kitchenTrue": "equipped_kitchen",
-	# 			"swimmingpoolTrue": "swimmingpool",
-	# 			"furnishedTrue": "furnished",
-	# 			"open_fireTrue": "open_fire",
-	# 			"terraceTrue": "terrace"}
-	# request.rename(columns = bool_rename, inplace = True)
+	# update default X features with values from the request
+	default = {
+			"area": None,
+			"property-type": None,
+			"rooms-number": None,
+			"zip-code": None,
+			"land-area": 0,
+			"garden": 0,
+			"garden-area": 0,
+			"equipped-kitchen": 0,
+			"swimmingpool": 0,
+			"furnished": 0,
+			"open-fire": 0,
+			"terrace": 0,
+			"terrace-area": 0,
+			"facades-number": 2,
+			"building-state": "good"
+	}
 
-	# categoricals = ["property_type", "zip_code", "building_state"]
-	# for cat in categoricals:
-	# 	request.columns = request.columns.str.replace(cat, '')
+	for key, value in default.items():
+		try:
+			default[key] = processed[key]
+		except:
+			pass
 
-	# request.columns = request.columns.str.replace('_', '-')
-
-	
-	# # Set up merging of the request data into the structure
-	# # of our model. Missing Optional features will be 0.
-	# with open("src/model/columns.json","r") as f:
-	# 	model_columns = json.load(f)['data_columns']
-	# model_df = pd.DataFrame({col: 0 for col in model_columns},
-	# 			index = [0]).T
-	# request_df = request.T[[0]]
-	
-	# request = request_df.merge(model_df, how = 'right',
-	# 						right_index = True,
-	# 						left_index = True)
-	# request['request'] = request.sum(axis = 1).astype(int)
-	# request = request['request'].to_numpy()
-	# print(request)
-
-	
-
-	return house_data
-
-
-example = {'open_fire': True, 'garden': True, 'facades_number': 2,
-		'full_address': 'Monseigneur Cardijnlaan 33/2 2650 Edegem',
-		'land_area': 500, 'zip_code': 2650, 'property_type': 'APARTMENT',
-		'garden_area': 200, 'building_state': 'NEW', 'area': 100,
-		'terrace': True, 'terrace_area': 10, 'equipped_kitchen': True,
-		'furnished': False, 'rooms_number': 3, 'swimmingpool': False}
-
-preprocess(example)
+	return default
