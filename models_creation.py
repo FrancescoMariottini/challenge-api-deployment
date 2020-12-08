@@ -97,24 +97,14 @@ def get_linear_model(df: pd.DataFrame,
 
 
 #TESTING ON WINDOWS (to exclude as comment when running Jupyter NB)
-
-
+"""
 dc = DataCleaning(csv_filepath = REAL_ESTATE_CSV_FILEPATH_WIN)
-
-
 df, df_outliers = dc.get_preprocessed_dataframe(cleaned_csv_path= CLEANED_CSV_FILEPATH_WIN,
                                                 features= FEATURES,
                                                 model_subtype= MODEL_SUBTYPE,
                                                 log_on_columns= LOG_ON_COLUMNS)
-
 lin_reg, metrics = get_linear_model(df, model_subtype= MODEL_SUBTYPE)
-
-
-
 print(metrics)
-
-#for notebook
-"""
 print(df_outliers)
 print(df.info())
 print(describe_with_tukey_fences(df))
