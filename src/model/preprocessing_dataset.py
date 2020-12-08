@@ -39,7 +39,7 @@ AGGREGATOR_COLUMNS = {min: "min", max: "max", np.mean: "mean", np.median: "media
 #FM 7/12/20 defining allowed model subtypes
 MODEL_SUBTYPES = ["APARTMENT", "HOUSE", "OTHERS"]
 OTHER_PROPERTY_SUBTYPES = ["OTHER_PROPERTY", "MIXED_USE_BUILDING"]
-FEATURES_MANDATORY = ["area", "house_is", "rooms_number", "postcode"]
+FEATURES_MANDATORY = ["area", "rooms_number", "postcode"]
 TARGET = "price"
 LOG_ON_COLUMNS = ["garden_area", "terrace_area", "land_surface", "area"]
 # Not used yet
@@ -321,15 +321,14 @@ class DataCleaning:
         df_out.loc[df_out['property_subtype'].isin(other_property_subtypes), "house_is"] = "OTHERS"
         # Drop the features which are irrelevant as per chi - square
         features.append(target)
-        df_out = df_out.loc[:, features]
         # FM 7/12/20 filtering dataframe before hot encoding
         if model_subtype not in MODEL_SUBTYPES:
             print(f'{model_subtype} model not found, OTHERS model used. Available models are:')
             print(",".join([m for m in MODEL_SUBTYPES]))
             model_subtype = "OTHERS"
         df_out = df_out.loc[df_out['house_is'] == model_subtype, :]
+        df_out = df_out.loc[:, features]
         #remove column since only one unique value
-        df_out.drop(columns='house_is', inplace=True)
         self.converters.append({"column": "house_is", "method": "type aggregation", "description": "to use submodel"}, ignore_index=True)
         for c in log_on_columns:
             df_out[c] = df_out[c].replace(to_replace=0, value=1)
@@ -337,8 +336,6 @@ class DataCleaning:
             self.converters.append({"column":c, "method":"log", "description":"to improve model" }, ignore_index=True)
         #replacing bool to avoid scikit-learn issue later
         df_out = df_out.replace(to_replace=[True, False], value=[1, 0])
-        #dropping source
-        df_out.drop(columns='source', inplace=True) 
         return df_out
         
 
@@ -365,7 +362,8 @@ class DataCleaning:
         #self.df_out, index_dropped = self.drop_outliers() #not dropping won't affect too much the accuracy
         #print(f"{len(index_dropped)} Dropped outliers, shape: {self.df_out.shape}")
         #8/12/2020 adding preprocessing
-        self.df_out = self.preprocess_features(features= features, model_subtype= model_subtype,
+        self.df_out = self.preprocess_features(df_before= self.df_out,
+                                                features= features, model_subtype= model_subtype,
                                                log_on_columns = log_on_columns)
         
         if cleaned_csv_path is not None:
