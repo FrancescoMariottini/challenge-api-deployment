@@ -78,12 +78,7 @@ starts <br />
 
 ## Response Object
 
-{<br>
-    "price-wrapper": {<br>
-            "prediction": Optional[float],<br>
-            "error": Optional[str]<br>
-    }<br>
-}<br>
+The API will repond with a float object indicating the predicted price of the property.
 
 ## Example Request
 
@@ -96,7 +91,7 @@ GET https://api.tobedefined.com/predict
 POST https://api.tobedefined.com/predict
 
 
-
+<pre>
 {<br>
     "data": {<br>
             "area": 150,<br>
@@ -110,15 +105,9 @@ POST https://api.tobedefined.com/predict
             "building-state":"TO RENOVATE"<br>
     }<br>
 } <br>
+</pre>
 // Note you can ommit some parameters in the Json file if they are `Optional`
 
-**return object**
-
-{<br>
-    "price-wrapper": {<br>
-            "prediction": 259451         <br>   
-    }<br>
-}<br>
 
 # Request object 
 
