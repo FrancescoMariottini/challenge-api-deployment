@@ -32,8 +32,9 @@ def predict():
         return response
 
     else :
+        req = request.get_json()
         try:
-            datadict = request.get_json()['data']
+            datadict = req['data']
         except:
             errors = {
                 "error": {"data": "no 'data' element in root"}
