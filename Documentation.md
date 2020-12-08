@@ -74,7 +74,7 @@ starts <br />
             "facades-number": Optional[int],<br>
             "building-state": Optional["NEW" | "GOOD" | "TO RENOVATE" | "JUST RENOVATED" | "TO REBUILD"]<br>
     }<br>
-} <pre/>
+} </pre>
 
 ## Response Object
 
