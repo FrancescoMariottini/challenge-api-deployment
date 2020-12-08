@@ -24,20 +24,27 @@ from typing import Dict
 import pickle
 import json
 
-#['src','land_surface', 'facades_number', 'swimming_pool_has','postcode_median_price',
-#              'property_subtype_median_facades_number', 'building_state_agg_median_price']
-
 #FM 8/12/2020 parameters to be checked in Joachim modeml
-FEATURES = [""]
 NUM_CV_FOLDS = 3
 DEGREE_MAX = 3
 
 #FM 7/12/20 defining allowed model subtypes
-TRAINING_TO_INPUT_COLUMNS = {"postcode":"zip-code", "is_house":"property-type",
-                             "rooms_number":"rooms-number"}
-#FM 7/12/20 defining dummies to be dropped. Others removed since filtering
+TRAINING_TO_INPUT_COLUMNS = {"postcode":"zip-code", "land_surface":"land-area",
+                             "rooms_number":"rooms-number", 'equipped_kitchen_has': "equipped-kitchen",
+                             'swimming_pool_has': "swimmingpool" , 'open_fire' : "open-fire" ,
+                              'terrace_area' : "terrace-area" , 'facades_number' :"facades-number",
+                              'building_state_agg': "building-state", 'garden_area':"garden-area"
+                             }
+
+FEATURES = ["area", "rooms_number", "postcode",'land_surface','garden','garden_area','equipped_kitchen_has',
+            'swimming_pool_has','furnished','open_fire', 'terrace', 'terrace_area', 'facades_number','building_state_agg',]
+
 TARGET = "price"
-DUMMIES_TO_DROP = ['9999'] #, 'OTHERS']
+MODEL_SUBTYPE = "HOUSE"
+LOG_ON_COLUMNS= ["garden_area", "terrace_area", "land_surface", "area"]
+#FM 7/12/20 defining dummies to be dropped. Others removed since filtering
+DUMMIES_TO_DROP = ['9999', 'to_renovate']
+
 
 #FM 7/12/20 11:59 updated dynamic filepath following new structure
 #FM 8/12/2020 different ways for linux & win really necessary ?
@@ -100,18 +107,18 @@ def get_linear_model(df: pd.DataFrame,
 
 #TESTING ON WINDOWS (to exclude as comment when running Jupyter NB)
 
+
 dc = DataCleaning(csv_filepath = REAL_ESTATE_CSV_FILEPATH_WIN)
 
-features = None
-model_subtype = "HOUSE"
-log_on_columns = ["garden_area", "terrace_area", "land_surface", "area"]
 
 df, df_outliers = dc.get_preprocessed_dataframe(cleaned_csv_path= CLEANED_CSV_FILEPATH_WIN,
-                                                features= features,
-                                                model_subtype= model_subtype,
-                                                log_on_columns= log_on_columns)
+                                                features= FEATURES,
+                                                model_subtype= MODEL_SUBTYPE,
+                                                log_on_columns= LOG_ON_COLUMNS)
 
-lin_reg, metrics = get_linear_model(df, model_subtype="APARTMENT")
+lin_reg, metrics = get_linear_model(df, model_subtype= MODEL_SUBTYPE)
+
+
 
 print(metrics)
 
