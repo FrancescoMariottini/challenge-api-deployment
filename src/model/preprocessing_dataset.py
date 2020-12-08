@@ -328,6 +328,8 @@ class DataCleaning:
             print(",".join([m for m in MODEL_SUBTYPES]))
             model_subtype = "OTHERS"
         df_out = df_out.loc[df_out['house_is'] == model_subtype, :]
+        #remove column since only one unique value
+        df_out.drop(columns='house_is', inplace=True)
         self.converters.append({"column": "house_is", "method": "type aggregation", "description": "to use submodel"}, ignore_index=True)
         for c in log_on_columns:
             df_out[c] = df_out[c].replace(to_replace=0, value=1)
