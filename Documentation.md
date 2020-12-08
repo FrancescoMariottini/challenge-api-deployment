@@ -131,10 +131,10 @@ garden|bool|no|Incidcates wheter or not the property has a garden|
 garden-area|int|no|Amount of m² of the garden|must be higher than 0
 equipped-kitchen|bool|no|Incidcates wheter or not the property has an equipped kitchen|
 full-address|string|no|Full address of the property|
-swimmingpool|bool|no|Incidcates wheter or not the property has a swimmingpool|
-furnished|bool|no|Incidcates wheter or not the property is furnished|
-open-fire|bool|no|Incidcates wheter or not the property an open fire installed|
-terrace|bool|no|Incidcates wheter or not the property a terrace|
+swimmingpool|bool|no|Indicates whether or not the property has a swimmingpool|
+furnished|bool|no|Indicates whether or not the property is furnished|
+open-fire|bool|no|Indicates whether or not the property an open fire installed|
+terrace|bool|no|Indicates whether or not the property a terrace|
 terrace-area|int|no|Amount of m² of the terrace| must be higher than 0
 facades-number|int|no|Amount of facades of the property|must be higher than 0
 building-state|string|no|Current state of the property|Must be one of these values: ["NEW", "GOOD", "TO RENOVATE", "JUST RENOVATED", "TO REBUILD"]
