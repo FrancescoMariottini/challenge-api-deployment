@@ -91,8 +91,8 @@ def get_linear_model(df: pd.DataFrame,
     model_evaluation_obj = evaluation.Model_Evaluation(lin_reg)
     ytrain_predictions, ytest_predictions = model_evaluation_obj.get_predictions(X_train, X_test)
     y_test, ytest_predictions, metrics = model_evaluation_obj.predict_model(X_train, y_train, X_test, y_test)
-    text_stream = open("models_metrics.csv", 'a')
-    #text_stream.write(",".join([pkl_filename]+[m for m in metrics_values]) + "\n")
+    text_stream = open(os.path.join(model_folder, "models_metrics.csv"), 'a')
+    text_stream.write(",".join([pkl_filename]+[m for m in metrics.values()]) + "\n")
     return lin_reg, metrics
 
 
