@@ -52,7 +52,7 @@ To get a prediction you need to provide several parameters, some are mandatory o
 ## Request Object
 
 {<br>
-    "data": {<br>
+    &nbsp"data": {<br>
             "area": int,<br>
             "property-type": "APARTMENT" | "HOUSE" | "OTHERS",<br>
             "rooms-number": int,<br>
