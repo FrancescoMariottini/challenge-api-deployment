@@ -55,8 +55,8 @@ The action of every agent <br />
 into the world <br />
 starts <br />
   from their physical selves. <br />
-{<br />
-  "data": {<br />
+{ <br />
+  "data": { <br />
             "area": int,<br>
             "property-type": "APARTMENT" | "HOUSE" | "OTHERS",<br>
             "rooms-number": int,<br>
