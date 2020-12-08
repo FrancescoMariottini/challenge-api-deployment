@@ -142,6 +142,8 @@ six|1.15.0
 Werkzeug|1.0.1
 
 ### Highlights ###
+First we had to find a root Dockerimage. While we found an existing image with ubuntu and python 3.8 already installed, it was too big (1.2 Go)
+so we opted in the end to start from a ubuntu image (without python) and to add some layers on top.
 
 ## Step 6: Deploy your Docker image in Heroku ##
 Heroku allowed to push the docker container on their server and to start it (more information [here](https://github.com/becodeorg/BXL-Bouman-2.22/tree/master/content/05.deployment/4.Web_Application)).
