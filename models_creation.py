@@ -84,7 +84,7 @@ def get_linear_model(df: pd.DataFrame,
         pickle.dump(lin_reg, model_pkl)
     #FM 8/12/20 Ankita please clarify why needed
     columns = {'data_columns': [col for col in X.columns]}
-    json_filename = model_subtype.lower() + '.csv'
+    json_filename = model_subtype.lower() + '.json'
     with open(os.path.join(model_folder, json_filename), "w") as f:
         f.write(json.dumps(columns))
     #FM 7/12/20  initialising model evalution to get error
