@@ -46,7 +46,7 @@ TARGET = "price"
 MODEL_SUBTYPE = "HOUSE"
 LOG_ON_COLUMNS= ["garden_area", "terrace_area", "land_surface", "area"]
 #FM 7/12/20 defining dummies to be dropped. Others removed since filtering
-DUMMIES_TO_DROP = ['9999', 'OTHERS', 'to_renovate']
+DUMMIES_TO_DROP = ['9999', 'to_renovate']
 
 
 #FM 7/12/20 11:59 updated dynamic filepath following new structure
