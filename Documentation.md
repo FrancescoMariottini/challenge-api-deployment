@@ -1,8 +1,6 @@
-TODO 
 
-. double check Jsons exposed and return format.
 
-# Title of the API
+# Immo Elisa API
 
 This API version of the API (1.0) exposes serveral routes to get predictions on the price of real estate.
 Access to routes doesn't need any kind of authentification.
