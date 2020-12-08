@@ -12,8 +12,8 @@ To get a prediction you need to provide several parameters, some are mandatory o
 1.1. [Alive](#alive)<br>
 1.2. [Predict](#predict)<br>
 2. Objects<br>
-2.1. [Request entity](#Request entity) <br>
-2.2. [Response entity](#Response entity)<br>
+2.1. [Request entity](#Request-entity) <br>
+2.2. [Response entity](#Response-entity)<br>
 3. [Errors](#Errors)<br>
 
 # Alive
