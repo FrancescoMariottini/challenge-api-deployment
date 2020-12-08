@@ -23,7 +23,7 @@ def load_pickle(model_subtype: str = "OTHERS"):
 def load_json() :
     
     global __data_columns
-    with open("source/model/columns.json","r") as f :
+    with open("src/model/columns.json","r") as f :
         __data_columns = json.load(f)['data_columns']
     
     
@@ -43,8 +43,8 @@ def predict_price(input_data):
     log_on_columns = ["garden_area", "terrace_area", "land_area", "area"]
 
     for c in log_on_columns:
-        input_data[c] = input_data[c].replace(to_replace=0, value=1)
-        input_data[c] =input_data[c].apply(np.log)
+        # input_data[c] = input_data[c].apply(np.log)
+        input_data[c] = np.log(input_data[c])
             
     try :
         loc_index = __data_columns.index(str(input_data['zip_code']))
@@ -106,3 +106,7 @@ retj = {
 
 #print(predict_price(retj))
 
+
+
+load_json()
+print(len(__data_columns))
