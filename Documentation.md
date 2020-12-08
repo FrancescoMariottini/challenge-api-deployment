@@ -8,13 +8,13 @@ To get a prediction you need to provide several parameters, some are mandatory o
 
 ## Summary
 
-1. Requests:
-1.1. Alive
-1.2. Predict
-2. Objects
-2.1. Request object 
-2.2. Response object
-3. Errors
+1. Requests<br>
+1.1. Alive<br>
+1.2. Predict<br>
+2. Objects<br>
+2.1. Request object <br>
+2.2. Response object<br>
+3. Errors<br>
 
 # roberta-eliza.herokuapp.com/
 
