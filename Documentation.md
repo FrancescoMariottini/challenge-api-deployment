@@ -5,6 +5,8 @@
 This API version of the API (1.0) exposes serveral routes to get predictions on the price of real estate.
 Access to routes doesn't need any kind of authentification.
 To get a prediction you need to provide several parameters, some are mandatory other are optional. 
+The more parameters your provide the better the prediction will be.
+The Base url is roberta-eliza.herokuapp.com.
 
 ## Summary
 
