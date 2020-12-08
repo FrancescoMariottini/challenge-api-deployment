@@ -24,22 +24,19 @@ from typing import Dict
 import pickle
 import json
 
-#['src','land_surface', 'facades_number', 'swimming_pool_has','postcode_median_price',
-#              'property_subtype_median_facades_number', 'building_state_agg_median_price']
-
 #FM 8/12/2020 parameters to be checked in Joachim modeml
 NUM_CV_FOLDS = 3
 DEGREE_MAX = 3
 
 #FM 7/12/20 defining allowed model subtypes
-TRAINING_TO_INPUT_COLUMNS = {"postcode":"zip-code", "is_house":"property-type","land_surface":"land-area",
+TRAINING_TO_INPUT_COLUMNS = {"postcode":"zip-code", "land_surface":"land-area",
                              "rooms_number":"rooms-number", 'equipped_kitchen_has': "equipped-kitchen",
                              'swimming_pool_has': "swimmingpool" , 'open_fire' : "open-fire" ,
                               'terrace_area' : "terrace-area" , 'facades_number' :"facades-number",
                               'building_state_agg': "building-state", 'garden_area':"garden-area"
                              }
 
-FEATURES = ["area", "house_is", "rooms_number", "postcode",'land_surface','garden','garden_area','equipped_kitchen_has',
+FEATURES = ["area", "rooms_number", "postcode",'land_surface','garden','garden_area','equipped_kitchen_has',
             'swimming_pool_has','furnished','open_fire', 'terrace', 'terrace_area', 'facades_number','building_state_agg',]
 
 TARGET = "price"
