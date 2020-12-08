@@ -17,9 +17,9 @@ def preprocess(validated: Optional[Dict[str, Union[int, bool, str]]] = None) -> 
 	except:
 		pass
 
-	processed = {
-		key.replace('_', '-'): value for key, value in processed.items()
-		}
+	# processed = {
+	# 	key.replace('_', '-'): value for key, value in processed.items()
+	# 	}
 
 	processed = {
 		key: int(value) if type(value) == bool else value for \
@@ -30,20 +30,20 @@ def preprocess(validated: Optional[Dict[str, Union[int, bool, str]]] = None) -> 
 	# update default X features with values from the request
 	default = {
 			"area": None,
-			"property-type": None,
-			"rooms-number": None,
-			"zip-code": None,
-			"land-area": 0,
+			"property_type": None,
+			"rooms_number": None,
+			"zip_code": None,
+			"land_area": 1,
 			"garden": 0,
-			"garden-area": 0,
-			"equipped-kitchen": 0,
+			"garden_area": 1,
+			"equipped_kitchen": 0,
 			"swimmingpool": 0,
 			"furnished": 0,
-			"open-fire": 0,
+			"open_fire": 0,
 			"terrace": 0,
-			"terrace-area": 0,
-			"facades-number": 2,
-			"building-state": "good"
+			"terrace_area": 1,
+			"facades_number": 2,
+			"building_state": "good"
 	}
 
 	for key, value in default.items():
