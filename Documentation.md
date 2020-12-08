@@ -10,11 +10,11 @@ To get a prediction you need to provide several parameters, some are mandatory o
 
 1. Requests<br>
 1.1. [Alive](#alive)<br>
-1.2. Predict<br>
+1.2. [Predict](#predict)<br>
 2. Objects<br>
-2.1. Request object <br>
-2.2. Response object<br>
-3. Errors<br>
+2.1. [Request entity](#Request entity) <br>
+2.2. [Response entity](#Response entity)<br>
+3. [Errors](#Errors)<br>
 
 # Alive
 
@@ -30,7 +30,7 @@ To get a prediction you need to provide several parameters, some are mandatory o
 - API Version - 1.0
 - Resource URI - roberta-eliza.herokuapp.com/
 
-# roberta-eliza.herokuapp.com/Predict 
+# Predict 
 
 ## Allowed HTTP Methods
 
@@ -44,9 +44,9 @@ To get a prediction you need to provide several parameters, some are mandatory o
 - Response Format - Json
 - Response Object - price-wrapper
 - API Version - 1.0
-- Resource URI - http://roberta-eliza.herokuapp.com
+- Resource URI - roberta-eliza.herokuapp.com/Predict
 
-## Request Object
+## Request Entity Json
 
 The action of every agent <br /> 
   into the world <br />
@@ -74,7 +74,7 @@ starts <br />
     }<br>
 } </pre>
 
-## Response Object
+## Response Entity format
 
 The API will repond with a float object indicating the predicted price of the property.
 
@@ -107,7 +107,7 @@ POST https://api.tobedefined.com/predict
 // Note you can ommit some parameters in the Json file if they are `Optional`
 
 
-# Request object 
+# Request entity 
 
 All strings are not case sensitive.
 
@@ -130,7 +130,7 @@ terrace-area|int|no|Amount of m² of the terrace| must be higher than 0
 facades-number|int|no|Amount of facades of the property|must be higher than 0
 building-state|string|no|Current state of the property|Must be one of these values: ["NEW", "GOOD", "TO RENOVATE", "JUST RENOVATED", "TO REBUILD"]
 
-# Return object 
+# Return entity 
 
 Name|Type|Mandatory|Description
 ---|---|---|---
