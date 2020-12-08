@@ -333,6 +333,10 @@ class DataCleaning:
             df_out[c] = df_out[c].replace(to_replace=0, value=1)
             df_out[c] =df_out[c].apply(np.log)
             self.converters.append({"column":c, "method":"log", "description":"to improve model" }, ignore_index=True)
+        #replacing bool to avoid scikit-learn issue later
+        df_out = df_out.replace(to_replace=[True, False], value=[1, 0])
+        #dropping source
+        df_out.drop(columns='source', inplace=True) 
         return df_out
         
 
@@ -361,6 +365,7 @@ class DataCleaning:
         #8/12/2020 adding preprocessing
         self.df_out = self.preprocess_features(features= features, model_subtype= model_subtype,
                                                log_on_columns = log_on_columns)
+        
         if cleaned_csv_path is not None:
             self.df_out.to_csv(cleaned_csv_path)
         return self.df_out, df_outliers
