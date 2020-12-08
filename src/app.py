@@ -3,14 +3,19 @@
 
 import json
 import os
+import sys
 
 from flask import Flask,request, jsonify , make_response
 
-from src.predict.prediction import predict_price
-from src.preprocessing.cleaning_data import preprocess
-from src.preprocessing.validation import DataFeatures
+from predict.prediction import predict_price
+from preprocessing.cleaning_data import preprocess
+from preprocessing.validation import DataFeatures
 
 app = Flask(__name__)
+
+print(os.getcwd())
+print(sys.path)
+
 
 @app.route('/')
 def status():
@@ -57,10 +62,18 @@ def predict():
         # Preprocess doesn't do anyting now
         processed = preprocess(validated)
 
+        #loading the model_metrics
+        #model_metrics = pd.read_csv('models_metrics'.csv)
+
         predicted_price = {
-            "Estimated price" : predict_price(processed)
-                          }
-        return make_response(jsonify(predicted_price), 200)
+            "prediction": {
+                "Estimated price" : predict_price(processed),
+                #"Accuracy" : ['test_size' :test_size, "median_absolute_error" :median_absolute_error, 'max_error' : max_error,
+                #               'percentile025':percentile025, 'percentile975': percentile975 ],
+                        },
+            'Message': 200
+            }
+        return make_response(jsonify(predicted_price))
         
 
 if __name__ == "__main__":
