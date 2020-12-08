@@ -40,7 +40,7 @@ FEATURES = ["area", "rooms_number", "postcode",'land_surface','garden','garden_a
             'swimming_pool_has','furnished','open_fire', 'terrace', 'terrace_area', 'facades_number','building_state_agg',]
 
 TARGET = "price"
-MODEL_SUBTYPE = "HOUSE"
+MODEL_SUBTYPE = "OTHERS"
 LOG_ON_COLUMNS= ["garden_area", "terrace_area", "land_surface", "area"]
 #FM 7/12/20 defining dummies to be dropped. Others removed since filtering
 DUMMIES_TO_DROP = ['9999', 'to_renovate']
@@ -89,15 +89,15 @@ def get_linear_model(df: pd.DataFrame,
         f.write(json.dumps(columns))
     #FM 7/12/20  initialising model evalution to get error
     model_evaluation_obj = evaluation.Model_Evaluation(lin_reg)
-    ytrain_predictions, ytest_predictions, metrics = model_evaluation_obj.get_predictions(X_train, X_test)
-    y_test, ytest_predictions = model_evaluation_obj.predict_model(X_train, y_train, X_test, y_test)
+    ytrain_predictions, ytest_predictions = model_evaluation_obj.get_predictions(X_train, X_test)
+    y_test, ytest_predictions, metrics = model_evaluation_obj.predict_model(X_train, y_train, X_test, y_test)
     text_stream = open("models_metrics.csv", 'a')
-    text_stream.write(",".join([pkl_filename]+[m for m in metrics_values]) + "\n")
+    #text_stream.write(",".join([pkl_filename]+[m for m in metrics_values]) + "\n")
     return lin_reg, metrics
 
 
 #TESTING ON WINDOWS (to exclude as comment when running Jupyter NB)
-"""
+
 dc = DataCleaning(csv_filepath = REAL_ESTATE_CSV_FILEPATH_WIN)
 df, df_outliers = dc.get_preprocessed_dataframe(cleaned_csv_path= CLEANED_CSV_FILEPATH_WIN,
                                                 features= FEATURES,
@@ -107,8 +107,8 @@ lin_reg, metrics = get_linear_model(df, model_subtype= MODEL_SUBTYPE)
 print(metrics)
 print(df_outliers)
 print(df.info())
-print(describe_with_tukey_fences(df))
-"""
+#print(describe_with_tukey_fences(df))
+
 
 
 
