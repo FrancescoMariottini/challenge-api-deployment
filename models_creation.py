@@ -100,7 +100,7 @@ def get_linear_model(df: pd.DataFrame,
     p025, p975 = biases_dsc['2.5%'], biases_dsc['97.5%']
     metrics_values = [str(int(m)) for m in [len(biases), mae, me, p025, p975]]
     metrics_keys = ['test_size', 'median_absolute_error', 'max_error', 'percentile025', 'percentile975']
-    text_stream = open("models_metrics.csv", 'w')
+    text_stream = open("models_metrics.csv", 'a')
     text_stream.write(",".join([pkl_filename]+[m for m in metrics_values]) + "\n")
     return lin_reg, dict(zip(metrics_keys, metrics_values))
 
