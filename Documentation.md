@@ -19,7 +19,7 @@ To get a prediction you need to provide several parameters, some are mandatory o
 2.2. Response object
 3. Errors
 
-# /
+# roberta-eliza.herokuapp.com/
 
 ## Allowed HTTP Methods
 
@@ -31,9 +31,9 @@ To get a prediction you need to provide several parameters, some are mandatory o
 - Request Object - None
 - Response Format - string
 - API Version - 1.0
-- Resource URI - https://api.tobedefined.com
+- Resource URI - https://roberta-eliza.herokuapp.com
 
-# /Predict 
+# roberta-eliza.herokuapp.com/Predict 
 
 ## Allowed HTTP Methods
 
@@ -47,7 +47,7 @@ To get a prediction you need to provide several parameters, some are mandatory o
 - Response Format - Json
 - Response Object - price-wrapper
 - API Version - 1.0
-- Resource URI - https://api.tobedefined.com
+- Resource URI - https://roberta-eliza.herokuapp.com
 
 ## Request Object
 
