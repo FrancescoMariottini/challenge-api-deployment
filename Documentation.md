@@ -153,6 +153,6 @@ When requesting our API you will always get a HTTP Status codes, here's a list o
 
 - 200 `OK` Means the request was accepeted, you will get the expected output.
 - 400 `Bad Request` Whenever something goes wrong with your request, e.g. your POST data and/or structure is wrong, a 400 Bad Request HTTP status is returned, describing the error within the content.
-- 405 `error` Indicates that the URI you provided can't be mapped.
+- 404 `error` Indicates that the URI you provided can't be mapped.
 - 500 `Internal server error` It means there is somehting wrong with our code, please contact us in such a situation.
 
