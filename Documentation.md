@@ -129,7 +129,7 @@ zip-code|int|yes|postcode of the property | must be between 1000 and 9999
 land-area|int|no|Amount of m² of the whole plot (garden included)| must be higher than 0
 garden|bool|no|Incidcates wheter or not the property has a garden| 
 garden-area|int|no|Amount of m² of the garden|must be higher than 0
-equipped-kitchen|bool|no|Incidcates wheter or not the property has an equipped kitchen|
+equipped-kitchen|bool|no|Indicates whether or not the property has an equipped kitchen|
 full-address|string|no|Full address of the property|
 swimmingpool|bool|no|Indicates whether or not the property has a swimmingpool|
 furnished|bool|no|Indicates whether or not the property is furnished|
