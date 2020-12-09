@@ -30,10 +30,19 @@ def load_files(model_subtype: str = "OTHERS"):
     with open(MODEL_FOLDER+"/"+model_subtype.lower()+".json","r") as f :
         __data_columns = json.load(f)['data_columns']
 
-    with open(MODEL_FOLDER + "/" + "models_metrics.csv", "r") as f:
+def load_metrics(input_data) :
+    
+    model_subtype = input_data['property_type']
+
+    with open("src/model/models_metrics.csv", "r") as f:
         reader = csv.DictReader(f)
         for row in reader:
-            print(row)
+            
+            if row['filename'] == model_subtype.lower()+".pkl" :
+               models_metrics = row
+        return models_metrics
+    
+    
     
     
 def predict_price(input_data):
@@ -96,7 +105,7 @@ def predict_price(input_data):
 
     
     return round((__model.predict([x])[0]), 2)
-
+'''
 retj = {
 "area": 300,
 "property_type": "HOUSE",
@@ -117,3 +126,4 @@ retj = {
 
 #testing
 print(predict_price(retj))
+'''
