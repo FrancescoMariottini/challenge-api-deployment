@@ -1,3 +1,6 @@
+"""preprocessing code for the request is here
+"""
+
 from typing import Dict, Optional, Union
 import pandas as pd
 import json
@@ -17,17 +20,13 @@ def preprocess(validated: Optional[Dict[str, Union[int, bool, str]]] = None) -> 
 	except:
 		pass
 
-	# processed = {
-	# 	key.replace('_', '-'): value for key, value in processed.items()
-	# 	}
-
 	processed = {
 		key: int(value) if type(value) == bool else value for \
 		key, value in processed.items()
 		}
 
 
-	# update default X features with values from the request
+	# update default feature values with the request
 	default = {
 			"area": None,
 			"property_type": None,
@@ -45,6 +44,13 @@ def preprocess(validated: Optional[Dict[str, Union[int, bool, str]]] = None) -> 
 			"facades_number": 2,
 			"building_state": "good"
 	}
+
+	# Do not update 'land_area' in case of apartments
+	if processed['property_type'] == 'APARTMENT':
+		try:
+			del processed["land_area"]
+		except:
+			pass
 
 	for key, value in default.items():
 		try:
