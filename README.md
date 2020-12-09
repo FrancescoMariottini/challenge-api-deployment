@@ -31,7 +31,6 @@ Project evalution is based on the compliance to the following criteria:
 ||The presentation is clean.|
 ||The web-dev group understood well how your API works.|
 
-
 # Development (how)
 Input requirements for the web developers were initially agreed with the other Becode teams. Then the team agreed on how to fulfill and split the required development steps among its members. Step 0 (team management) was added.
 
@@ -45,7 +44,6 @@ Input requirements for the web developers were initially agreed with the other B
 7. Document your API
 
 For step 2 and 3 [source files](https://github.com/FrancescoMariottini/Belgium-prices-prediction/tree/main/source) from the previous project were used as basis after adapting them in in line with the JSON input requirements.
-
 
 ## Input requirements
 Hereby follow the agreed requirements for the json to be provided by the web developers:
@@ -141,7 +139,6 @@ The complete documentation about the API is available [here](https://github.com/
     
 ### Highlights ###
 
-
 ## Step 5: Create a Dockerfile to wrap your API ##
 To deploy the API Docker was used.
 The Dockerfile created an image with Ubuntu and Python 3.8 plus all the required dependencies for the created code:
@@ -188,8 +185,6 @@ Here's a [link](https://github.com/FrancescoMariottini/challenge-api-deployment/
 
 **What is the output in case of error?**<br>
 Here's a [link](https://github.com/FrancescoMariottini/challenge-api-deployment/blob/new/Documentation.md#errors) to all the possible errors <br>
-
-### Highlights ###
 
 # Conclusions
 First release of the API was made easier by using information from the previous project and by splitting the work among all the team members.
