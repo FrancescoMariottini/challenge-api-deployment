@@ -75,9 +75,16 @@ Hereby follow the agreed requirements for the json to be provided by the web dev
 Output requirements were not strictly fixed but rather delegated to each team after sharing a reference template:
 
 ```json
-{
-    "prediction": Optional[float],
-    "error": Optional[str]
+response = {
+  prediction: {
+    priceL: int,
+    test_size: int,
+    median_absolute_error: float,
+    max_error: float,
+    percentile025: float,
+    percentile975: float
+  },
+  error: str
 }
 ```
 A HTTP status code is also provided in case of error.
