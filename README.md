@@ -198,9 +198,9 @@ Project is considered concluded and no additional work is not foreseen. However 
 1. use logaritmic transformations only when relevant
 
 # Timeline (when): 
-2/12/2020 (start)
-8/12/2020 (code deliverable)
-14/12/2020 (presentation deliverable)
+- 2/12/2020 (start)
+- 9/12/2020 (code deliverable)
+- 14/12/2020 (presentation deliverable)
 
 # Team:
 [Ankita Haldia](https://www.linkedin.com/in/ankitahaldia/)
