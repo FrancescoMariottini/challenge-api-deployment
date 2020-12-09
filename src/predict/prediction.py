@@ -1,6 +1,7 @@
 import pickle
 import numpy as np
 import json
+import csv
 from sklearn.linear_model import LinearRegression
 #import joblib
 
@@ -22,19 +23,28 @@ def load_files(model_subtype: str = "OTHERS"):
   
     with open("src/model/"+model_subtype.lower()+".json","r") as f :
         __data_columns = json.load(f)['data_columns']
+        
+    ##loading file to be completed
+    with open(MODEL_FOLDER + "/" + "models_metrics.csv", "r") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            print(row)
+            #if filename is according to model retrieve metrics
+    
+    
     
     
 def predict_price(input_data):
     """
     Function predicts the price with input data.
-    :param property_type: property type data
+    :param property-type: property type data
     :param zip-code: postcode data
     :param area: area(in sq.metre)
     :param rooms: number of rooms
     :return: predicted price value
     """
     
-    load_files(input_data['property_type'])
+    load_files(input_data['property-type'])
     
     input_data['log_area'] = np.log(input_data['area'])
     log_on_columns = ["garden_area", "terrace_area", "land_area", "area"]
@@ -49,7 +59,7 @@ def predict_price(input_data):
         loc_index = -1
 
     '''try :
-        prop_type_index = __data_columns.index(input_data['property_type'])
+        prop_type_index = __data_columns.index(input_data['property-type'])
     except :
         prop_type_index = -1
     '''
