@@ -38,18 +38,13 @@ class Model_Evaluation:
 
         ytrain_predictions, ytest_predictions = self.get_predictions(X_train, X_test)
 
-        mae = mean_absolute_error(y_test, ytest_predictions)
+        mn_abs = mean_absolute_error(y_test, ytest_predictions)
 
         mse = mean_squared_error(y_test, ytest_predictions)
         rmse = np.sqrt(mse)
         mape = (mse/y_test)*100
         train_score = r2_score(y_train, ytrain_predictions)
         test_score = r2_score(y_test, ytest_predictions)
-
-        Results = pd.DataFrame({'MAE': mae, 'MSE': mse, 'RMSE': rmse,
-                                'Train_RSquare': train_score, 'Test_RSquare': test_score}, index=['Values'])
-        print('Evaluation Metrics')
-        print(tabulate(Results, headers='keys', tablefmt='fancy_grid'))
 
         plt.subplot(1, 2, 1)
         # display plots
@@ -68,12 +63,19 @@ class Model_Evaluation:
         # FM 8/12/20 distplot deprecated to be replaced
         sns.distplot(residuals)
         plt.tight_layout()
-        plt.show()
+        plt.show()      
         residuals_dsc = residuals.describe(percentiles=[0.975, 0.025])
         mae = median_absolute_error(y_test, ytest_predictions)
         me = max_error(y_test, ytest_predictions)
         p025, p975 = residuals_dsc['2.5%'], residuals_dsc['97.5%']
         metrics_values = [str(int(m)) for m in [len(residuals), mae, me, p025, p975]]
         metrics_keys = ['test_size', 'median_absolute_error', 'max_error', 'percentile025', 'percentile975']
+        metrics_main = dict(zip(metrics_keys, metrics_values))
+        metrics_additional = {'mean absolute error': mn_abs, 'mean squared error': mse, 'root mean square error': rmse,
+                                'coefficient of determination (train dataset)': train_score,
+                                'coefficient of determination (test dataset)': test_score}        
+        results = dict(metrics_main, **metrics_additional)
+        print('Evaluation Metrics')
+        print(tabulate(pd.DataFrame(results, index=['values']), headers='keys', tablefmt='fancy_grid'))      
         # FM 7/12/20  return error
-        return y_test, ytest_predictions, dict(zip(metrics_keys, metrics_values))
+        return y_test, ytest_predictions, metrics_main
