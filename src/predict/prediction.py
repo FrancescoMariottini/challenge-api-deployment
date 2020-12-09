@@ -34,7 +34,7 @@ def load_metrics(input_data) :
     
     model_subtype = input_data['property_type']
 
-    with open("src/model/models_metrics.csv", "r") as f:
+    with open(MODEL_FOLDER+"/models_metrics.csv", "r") as f:
         reader = csv.DictReader(f)
         for row in reader:
             
