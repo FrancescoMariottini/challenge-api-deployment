@@ -2,7 +2,7 @@
 The real estate company ['ImmoEliza'](https://immoelissa.be/) was really happy about our previously made regression model. They would like you to create an API to let their web-devs create a website around it.
 
 # Description (why)
-Housing prices prediction is an essential element for an economy. Analysis of price ranges influence both sellers and buyers. 
+Housing prices prediction is an essential element for an economy. Analysis of price ranges influence both sellers and buyers.<br> 
 [Documentation](https://github.com/FrancescoMariottini/challenge-api-deployment/blob/main/Documentation.md)
 
 Our [previous project](https://github.com/FrancescoMariottini/Belgium-prices-prediction/settings) created a Linear Regression model to estimate the price of the house accurately with the given features. Within this project an online API to run the price prediction is made. 
