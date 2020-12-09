@@ -26,8 +26,9 @@ def preprocess(validated: Optional[Dict[str, Union[int, bool, str]]] = None) -> 
 		}
 
 
-	# update default feature values with the request
-	default = {
+	# value imputation in case not provided in request
+	# areas are 1 because the model features is log(area)
+	imputed = {
 			"area": None,
 			"property_type": None,
 			"rooms_number": None,
@@ -45,17 +46,18 @@ def preprocess(validated: Optional[Dict[str, Union[int, bool, str]]] = None) -> 
 			"building_state": "good"
 	}
 
-	# Do not update 'land_area' in case of apartments
+	# Do not reflect requested 'land_area' in case of apartments
+	# The model wrongly provides a negative price for those
 	if processed['property_type'] == 'APARTMENT':
 		try:
 			del processed["land_area"]
 		except:
 			pass
 
-	for key, value in default.items():
+	for key, value in impute.items():
 		try:
-			default[key] = processed[key]
+			imputed[key] = processed[key]
 		except:
 			pass
 
-	return default
+	return imputed
