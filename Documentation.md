@@ -1,6 +1,8 @@
 
 
-# Immo Elisa API
+# Immo Elisa API Documentation
+
+![.](https://tovodata.com/wp-content/uploads/sites/77/2020/08/animation_640_kdmubtw7.gif)
 
 This API version of the API (1.0) exposes serveral routes to get predictions on the price of real estate.
 Access to routes doesn't need any kind of authentification.
@@ -181,3 +183,4 @@ When requesting our API you will always get a HTTP Status codes, here's a list o
 - 404 `error` Indicates that the URI you provided can't be mapped.
 - 500 `Internal server error` It means there is somehting wrong with our code, please contact us in such a situation.
 
+![.](https://media.discordapp.net/attachments/762942794183999539/785888441699008512/uml_roberta-eliza.png?width=413&height=905)
