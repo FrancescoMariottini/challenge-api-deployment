@@ -46,10 +46,10 @@ def predict_price(input_data):
     :return: predicted price value
     """
     
-    load_files(input_data['property-type'])
+    load_files(input_data['property_type'])
     
     input_data['log_area'] = np.log(input_data['area'])
-    log_on_columns = ["garden-area", "terrace-area", "land-area", "area"]
+    log_on_columns = ["garden_area", "terrace_area", "land_area", "area"]
 
     for c in log_on_columns:
         # input_data[c] = input_data[c].apply(np.log)
@@ -73,17 +73,17 @@ def predict_price(input_data):
 
     x = np.zeros(len(__data_columns))
     x[0] = input_data['area']
-    x[1] = input_data['rooms-number']
-    x[2] = input_data["land-area"]
+    x[1] = input_data['rooms_number']
+    x[2] = input_data["land_area"]
     x[3] = input_data["garden"]
-    x[4] = input_data["garden-area"]
-    x[5] = input_data["equipped-kitchen"]
+    x[4] = input_data["garden_area"]
+    x[5] = input_data["equipped_kitchen"]
     x[6] = input_data["swimmingpool"]
     x[7] = input_data["furnished"]
-    x[8] = input_data["open-fire"]
+    x[8] = input_data["open_fire"]
     x[9] = input_data["terrace"]
-    x[10] = input_data["terrace-area"]
-    x[11] = input_data["facades-number"]
+    x[10] = input_data["terrace_area"]
+    x[11] = input_data["facades_number"]
 
     '''
     if prop_type_index >= 0:
@@ -99,20 +99,20 @@ def predict_price(input_data):
 
 retj = {
 "area": 300,
-"property-type": "HOUSE",
-"rooms-number": 3,
-"zip-code": 8300,
-"land-area": 500,
+"property_type": "HOUSE",
+"rooms_number": 3,
+"zip_code": 8300,
+"land_area": 500,
 "garden": 1,
-"garden-area": 50,
-"equipped-kitchen": 0,
+"garden_area": 50,
+"equipped_kitchen": 0,
 "swimmingpool": 0,
 "furnished": 1,
-"open-fire": 0,
+"open_fire": 0,
 "terrace": 1,
-"terrace-area": 10,
-"facades-number": 3,
-"building-state": "GOOD"
+"terrace_area": 10,
+"facades_number": 3,
+"building_state": "GOOD"
 }
 
 #testing
