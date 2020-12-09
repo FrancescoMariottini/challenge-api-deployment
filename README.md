@@ -7,7 +7,7 @@ API is documented [here](https://github.com/FrancescoMariottini/challenge-api-de
 
 Our [previous project](https://github.com/FrancescoMariottini/Belgium-prices-prediction/settings) created a Linear Regression model to estimate the price of the house accurately with the given features. Within this project an online API to run the price prediction is made. 
 
-An overview of the project is available as the [Google presentation](https://docs.google.com/presentation/d/1Q2EqDDF23fEurSE9UoajGYLVUUjL3RoalAZpDN98q6E/edit#slide=id.p2) 
+An overview of the project is available as the [Google presentation](https://docs.google.com/presentation/d/1Q2EqDDF23fEurSE9UoajGYLVUUjL3RoalAZpDN98q6E/edit#slide=id.p2). 
 
 # Target audience (to whom)
 ['ImmoEliza'](https://immoelissa.be/) web developers to receive price prediction based on input values provided by a user.
@@ -123,6 +123,8 @@ In the app.py file, the Flask API contains:
 * A route at /predict that accept:
     * POST request that receives the data of a house in json format.
     * GET request returning a string to explain what the POST expect (data and format).
+    
+The complete documentation about the API is available [here]([here](https://github.com/FrancescoMariottini/challenge-api-deployment/blob/main/Documentation.md).
     
 ### Highlights ###
 
