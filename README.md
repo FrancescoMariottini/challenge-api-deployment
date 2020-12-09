@@ -171,7 +171,7 @@ Heroku allowed to push the docker container on their server and to start it (mor
 ## Step 7: Document your API ##
 API is documented [here](https://github.com/FrancescoMariottini/challenge-api-deployment/blob/main/Documentation.md).
 
-### API FAQ ##"
+### API FAQ ##
 Hereby follow the answers to the main questions about the API.
 
 *What routes are available? With which methods?*
