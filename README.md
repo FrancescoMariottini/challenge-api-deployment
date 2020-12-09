@@ -183,6 +183,7 @@ Some fields are mandatory and some must apply some validation conditions.<br>
 
 **What is the output of each route in case of success?**<br>
 Here's a [link](https://github.com/FrancescoMariottini/challenge-api-deployment/blob/new/Documentation.md#return-entity) to more deatail about about the return entity<br>
+
 **What is the output in case of error?**<br>
 Here's a [link](https://github.com/FrancescoMariottini/challenge-api-deployment/blob/new/Documentation.md#errors) to all the possible errors <br>
 
