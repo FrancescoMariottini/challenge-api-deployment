@@ -116,8 +116,9 @@ Even with git connection problems it was still possible to push for ordered chan
 It wasn't initially clear how to split the code between the model creation/evaluation and the API service thus some additional time was spent on reconverting the files structure after.
 
 ## Step 2: Pre-processing pipeline ##
-This python module contains all the code to preprocess the data. The file cleaning_data.py contains all the code used to preprocess the data received to predict a new price (fill the nan, handle text data,...). The file contains a function preprocess() that takes a new house's data as input and returns those data preprocessed as output.
-If data doesn't contain the required information, an error is returned to the user.
+The DataFeatures class in validation.py serves to validate if the client stuck to the required json schema and stayed within realistic value ranges. It has operations for returning human readable errors and returning a corrected json, where for example "0" is evaluated as integer 0. The class is based on the [marshmallow](https://github.com/marshmallow-code/marshmallow) library.
+
+The file cleaning_data.py contains all the code used to preprocess the validated request received to predict a new price. Optional values not provided by the client but needed by our model are imputed to be 0 (ex. does not have swimmingpool) or 1 (ex. garden-area is 0). We use 1 to indicate a zero area value because the model feature is actually log(area).
 
 ### Highlights ###
 The pre-processing was split into two distinguished step, the validation of the request and then the formatting of the values after to comply with the model requirements.
