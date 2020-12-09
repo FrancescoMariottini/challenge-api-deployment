@@ -28,7 +28,7 @@ def load_files():
 def predict_price(input_data):
     """
     Function predicts the price with input data.
-    :param property_type: property type data
+    :param property-type: property type data
     :param zip-code: postcode data
     :param area: area(in sq.metre)
     :param rooms: number of rooms
@@ -43,7 +43,7 @@ def predict_price(input_data):
         loc_index = -1
 
     try :
-        prop_type_index = __data_columns.index(input_data['property_type'])
+        prop_type_index = __data_columns.index(input_data['property-type'])
     except :
         prop_type_index = -1
 
