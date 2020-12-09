@@ -204,6 +204,6 @@ On modelling part:
 
 # Team:
 [Ankita Haldia](https://www.linkedin.com/in/ankitahaldia/)
-[Francesco Mariottini](https://www.linkedin.com/in/francescomariottini/
+[Francesco Mariottini](https://www.linkedin.com/in/francescomariottini/)
 [Opaps](https://www.linkedin.com/in/opapsditudidi/)
 [Philippe](https://www.linkedin.com/in/phfimmers/)
