@@ -3,14 +3,20 @@ import numpy as np
 import json
 import csv
 from sklearn.linear_model import LinearRegression
-#import joblib
 
 __location = None
 __data_columns = None
 __model = None
+__metrics = None
+
+#dynamic filepahts for win testing (FM)
+import os
+MODEL_FOLDER = os.path.join(os.path.dirname(os.getcwd()), "model")
+MODEL_FOLDER = "src/model"
+
 
 def load_files(model_subtype: str = "OTHERS"):
-    
+
     global __data_columns
     global __model
     MODEL_SUBTYPES = ["APARTMENT", "HOUSE", "OTHERS"]
@@ -18,20 +24,16 @@ def load_files(model_subtype: str = "OTHERS"):
     if model_subtype not in MODEL_SUBTYPES:
         model_subtype = "OTHERS"
 
-    with open("src/model/"+model_subtype.lower()+".pkl", 'rb') as model_file :
+    with open(MODEL_FOLDER+"/"+model_subtype.lower()+".pkl", 'rb') as model_file :
         __model = pickle.load(model_file)
-  
-    with open("src/model/"+model_subtype.lower()+".json","r") as f :
+
+    with open(MODEL_FOLDER+"/"+model_subtype.lower()+".json","r") as f :
         __data_columns = json.load(f)['data_columns']
-        
-    ##loading file to be completed
+
     with open(MODEL_FOLDER + "/" + "models_metrics.csv", "r") as f:
         reader = csv.DictReader(f)
         for row in reader:
             print(row)
-            #if filename is according to model retrieve metrics
-    
-    
     
     
 def predict_price(input_data):
@@ -47,12 +49,12 @@ def predict_price(input_data):
     load_files(input_data['property-type'])
     
     input_data['log_area'] = np.log(input_data['area'])
-    log_on_columns = ["garden_area", "terrace_area", "land_area", "area"]
+    log_on_columns = ["garden-area", "terrace-area", "land-area", "area"]
 
     for c in log_on_columns:
         # input_data[c] = input_data[c].apply(np.log)
         input_data[c] = np.log(input_data[c])
-
+                
     try :
         loc_index = __data_columns.index(str(input_data['zip_code']))
     except :
@@ -71,17 +73,17 @@ def predict_price(input_data):
 
     x = np.zeros(len(__data_columns))
     x[0] = input_data['area']
-    x[1] = input_data['rooms_number']
-    x[2] = input_data["land_area"]
+    x[1] = input_data['rooms-number']
+    x[2] = input_data["land-area"]
     x[3] = input_data["garden"]
-    x[4] = input_data["garden_area"]
-    x[5] = input_data["equipped_kitchen"]
+    x[4] = input_data["garden-area"]
+    x[5] = input_data["equipped-kitchen"]
     x[6] = input_data["swimmingpool"]
     x[7] = input_data["furnished"]
-    x[8] = input_data["open_fire"]
+    x[8] = input_data["open-fire"]
     x[9] = input_data["terrace"]
-    x[10] = input_data["terrace_area"]
-    x[11] = input_data["facades_number"]
+    x[10] = input_data["terrace-area"]
+    x[11] = input_data["facades-number"]
 
     '''
     if prop_type_index >= 0:
@@ -113,4 +115,5 @@ retj = {
 "building-state": "GOOD"
 }
 
-#print(predict_price(retj))
+#testing
+print(predict_price(retj))
