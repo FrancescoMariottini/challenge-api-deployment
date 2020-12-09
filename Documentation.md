@@ -118,6 +118,8 @@ POST https://api.tobedefined.com/predict
 // Note you can ommit some parameters in the Json file if they are `Optional`
 
 Response :
+
+<pre>
 response = {
   prediction: {
     priceL: 190000,
@@ -128,6 +130,8 @@ response = {
     percentile975: 13485.12
   }
 }
+</pre>
+
 
 
 # Request entity 
@@ -156,18 +160,6 @@ building-state|string|no|Current state of the property|Must be one of these valu
 # Return entity 
 
 the response object has two sub objects the `error` containing an error message if there is one and the prediction object containing the prediction and other usefull information.
-
-response = {
-  prediction: {
-    priceL: int,
-    test_size: int,
-    median_absolute_error: float,
-    max_error: float,
-    percentile025: float,
-    percentile975: float
-  },
-  error: str
-}
 
 Name|Type|Description
 ---|---|---
