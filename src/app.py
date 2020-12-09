@@ -7,7 +7,7 @@ import sys
 
 from flask import Flask,request, jsonify , make_response
 
-from predict.prediction import predict_price
+from predict.prediction import predict_price, load_metrics
 from preprocessing.cleaning_data import preprocess
 from preprocessing.validation import DataFeatures
 
@@ -68,16 +68,21 @@ def predict():
         sys.stdout.flush()
 
         #loading the model_metrics
-        #model_metrics = pd.read_csv('models_metrics'.csv)
-
+        metrics = load_metrics(processed)
+        
         predicted_price = {
-            "prediction": {
+            "prediction" : {  
                 "Estimated price" : predict_price(processed),
-                #"Accuracy" : ['test_size' :test_size, "median_absolute_error" :median_absolute_error, 'max_error' : max_error,
-                #               'percentile025':percentile025, 'percentile975': percentile975 ],
+                "Accuracy" : {
+                            'test_size' :metrics['test_size'],
+                            'median_absolute_error' :metrics['median_absolute_error'],
+                            'max_error' : metrics['max_error'],
+                            'percentile025':metrics['percentile025'],
+                            'percentile975':metrics['percentile975'],
+                            }
                         },
-            'Message': 200
-            }
+                'Message': 200
+                          }
         return make_response(jsonify(predicted_price))
         
 
