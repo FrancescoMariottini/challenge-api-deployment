@@ -1,6 +1,7 @@
 import pickle
 import numpy as np
 import json
+import csv
 from sklearn.linear_model import LinearRegression
 #import joblib
 
@@ -22,6 +23,15 @@ def load_files(model_subtype: str = "OTHERS"):
   
     with open("src/model/"+model_subtype.lower()+".json","r") as f :
         __data_columns = json.load(f)['data_columns']
+        
+    ##loading file to be completed
+    with open(MODEL_FOLDER + "/" + "models_metrics.csv", "r") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            print(row)
+            #if filename is according to model retrieve metrics
+    
+    
     
     
 def predict_price(input_data):
