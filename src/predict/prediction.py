@@ -27,14 +27,14 @@ def load_files(model_subtype: str = "OTHERS"):
 def predict_price(input_data):
     """
     Function predicts the price with input data.
-    :param property_type: property type data
+    :param property-type: property type data
     :param zip-code: postcode data
     :param area: area(in sq.metre)
     :param rooms: number of rooms
     :return: predicted price value
     """
     
-    load_files(input_data['property_type'])
+    load_files(input_data['property-type'])
     
     input_data['log_area'] = np.log(input_data['area'])
     log_on_columns = ["garden_area", "terrace_area", "land_area", "area"]
@@ -49,7 +49,7 @@ def predict_price(input_data):
         loc_index = -1
 
     '''try :
-        prop_type_index = __data_columns.index(input_data['property_type'])
+        prop_type_index = __data_columns.index(input_data['property-type'])
     except :
         prop_type_index = -1
     '''
