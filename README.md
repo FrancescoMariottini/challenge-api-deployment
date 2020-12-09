@@ -113,12 +113,14 @@ All these main folders, exclusively dedicated to the api, were created in a **so
 
 ### Highlights ###
 Even with git connection problems it was still possible to push for ordered changes in the repository through github.
+It wasn't initially clear how to split the code between the model creation/evaluation and the API service thus some additional time was spent on reconverting the files structure after.
 
 ## Step 2: Pre-processing pipeline ##
 This python module contains all the code to preprocess the data. The file cleaning_data.py contains all the code used to preprocess the data received to predict a new price (fill the nan, handle text data,...). The file contains a function preprocess() that takes a new house's data as input and returns those data preprocessed as output.
 If data doesn't contain the required information, an error is returned to the user.
 
 ### Highlights ###
+The pre-processing was split into two distinguished step, the validation of the request and then the formatting of the values after to comply with the model requirements.
 
 ## Step 3: Fit your data! ##
 In the predict folder a file prediction.py contains all the code used to predict a new house's price. The file contains a function predict() that takes the preprocessed data as an input and returns a price as output.
