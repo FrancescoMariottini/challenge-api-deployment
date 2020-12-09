@@ -183,4 +183,6 @@ When requesting our API you will always get a HTTP Status codes, here's a list o
 - 404 `error` Indicates that the URI you provided can't be mapped.
 - 500 `Internal server error` It means there is somehting wrong with our code, please contact us in such a situation.
 
+## Specific error handling for the predict route
+
 ![.](https://media.discordapp.net/attachments/762942794183999539/785888441699008512/uml_roberta-eliza.png?width=413&height=905)
