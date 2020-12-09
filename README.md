@@ -191,7 +191,7 @@ First release of the API was made easier by using information from the previous 
 Additional small improvements posed a challenge since their impact had to be verifed in all the different steps involving different platforms/tools (comparing to a simpler code integration). 
 
 # Future steps
-Project is considered concluded and no additional work is not foreseen. However a few possible improvements on the modelling part are hereby suggested:
+Project is considered concluded and no additional work is not foreseen. However a few possible improvements on the modelling part are hereby suggested to improve its accuracy:
 1. scrapping more data online including also other key parameters (e.g. building construction year)
 1. make full use of other available reliable datasets (e.g. official statistics) to improve the model
 1. replace linear regression (degree equal to one) with a polynomial when relevant
