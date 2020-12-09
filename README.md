@@ -3,7 +3,7 @@ The real estate company ['ImmoEliza'](https://immoelissa.be/) was really happy a
 
 # Description (why)
 Housing prices prediction is an essential element for an economy. Analysis of price ranges influence both sellers and buyers.<br> 
-API is documented [here](https://github.com/FrancescoMariottini/challenge-api-deployment/blob/main/Documentation.md).
+The API is stored on [Heroku](http://roberta-eliza.heroluapp.com/) and is documented [here](https://github.com/FrancescoMariottini/challenge-api-deployment/blob/main/Documentation.md).
 
 Our [previous project](https://github.com/FrancescoMariottini/Belgium-prices-prediction/settings) created a Linear Regression model to estimate the price of the house accurately with the given features. Within this project an online API to run the price prediction is made. 
 
@@ -192,15 +192,15 @@ Here's a [link](https://github.com/FrancescoMariottini/challenge-api-deployment/
 ### Highlights ###
 
 # Conclusions
-
+First release of the API was made easier by using information from the previous project and by splitting the work among all the team members.
+Additional small improvements posed a challenge since their impact had to be verifed in all the different steps involving different platforms/tools (comparing to a simpler code integration). 
 
 # Future steps
-Project is considered concluded and no additional work is not foreseen. However a few possible improvements are hereby suggested.
-
-On modelling part:
+Project is considered concluded and no additional work is not foreseen. However a few possible improvements on the modelling part are hereby suggested:
 1. scrapping more data online including also other key parameters (e.g. building construction year)
 1. make full use of other available reliable datasets (e.g. official statistics) to improve the model
-1. explore different subsets of data (e.g. by building type and status) to get accurate targeted results
+1. replace linear regression (degree equal to one) with a polynomial when relevant
+1. use logaritmic transformations only when relevant
 
 # Timeline (when): 
 2/12/2020 (start)
