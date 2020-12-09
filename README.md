@@ -2,9 +2,12 @@
 The real estate company ['ImmoEliza'](https://immoelissa.be/) was really happy about our previously made regression model. They would like you to create an API to let their web-devs create a website around it.
 
 # Description (why)
-Housing prices prediction is an essential element for an economy. Analysis of price ranges influence both sellers and buyers. 
+Housing prices prediction is an essential element for an economy. Analysis of price ranges influence both sellers and buyers.<br> 
+API is documented [here](https://github.com/FrancescoMariottini/challenge-api-deployment/blob/main/Documentation.md).
 
 Our [previous project](https://github.com/FrancescoMariottini/Belgium-prices-prediction/settings) created a Linear Regression model to estimate the price of the house accurately with the given features. Within this project an online API to run the price prediction is made. 
+
+An overview of the project is available as the [Google presentation](https://docs.google.com/presentation/d/1Q2EqDDF23fEurSE9UoajGYLVUUjL3RoalAZpDN98q6E/edit#slide=id.p2). 
 
 # Target audience (to whom)
 ['ImmoEliza'](https://immoelissa.be/) web developers to receive price prediction based on input values provided by a user.
@@ -72,9 +75,16 @@ Hereby follow the agreed requirements for the json to be provided by the web dev
 Output requirements were not strictly fixed but rather delegated to each team after sharing a reference template:
 
 ```json
-{
-    "prediction": Optional[float],
-    "error": Optional[str]
+response = {
+  prediction: {
+    price: int,
+    test_size: int,
+    median_absolute_error: float,
+    max_error: float,
+    percentile025: float,
+    percentile975: float
+  },
+  error: str
 }
 ```
 A HTTP status code is also provided in case of error.
@@ -89,6 +99,7 @@ Morning meeting were scheduled to check the status of the project and plan the d
 An interim review was set up on 4/12/20 to upload an already working version before refining it. 
 
 ### Highlights ###
+Organisation and coordination after deploying the first deployment on Heroku on 4/12/2020 posed a challenge since many small improvements had to be tested which were overlapping.
 
 ## Step 1: Project preparation ##
 A repository was prepared to fullfill the required requirements: 
@@ -101,17 +112,22 @@ A repository was prepared to fullfill the required requirements:
 All these main folders, exclusively dedicated to the api, were created in a **source** folder. Additional folders (**assets**, **data**, **docs** and **outpus**) were created for the project.
 
 ### Highlights ###
+Even with git connection problems it was still possible to push for ordered changes in the repository through github.
+It wasn't initially clear how to split the code between the model creation/evaluation and the API service thus some additional time was spent on reconverting the files structure after.
 
 ## Step 2: Pre-processing pipeline ##
-This python module contains all the code to preprocess the data. The file cleaning_data.py contains all the code used to preprocess the data received to predict a new price (fill the nan, handle text data,...). The file contains a function preprocess() that takes a new house's data as input and returns those data preprocessed as output.
-If data doesn't contain the required information, an error is returned to the user.
+The DataFeatures class in validation.py serves to validate if the client stuck to the required json schema and stayed within realistic value ranges. It has operations for returning human readable errors and returning a corrected json, where for example "0" is evaluated as integer 0. The class is based on the [marshmallow](https://github.com/marshmallow-code/marshmallow) library.
+
+The file cleaning_data.py contains all the code used to preprocess the validated request received to predict a new price. Optional values not provided by the client but needed by our model are imputed to be 0 (ex. does not have swimmingpool) or 1 (ex. garden-area is 0). We use 1 to indicate a zero area value because the model feature is actually log(area).
 
 ### Highlights ###
+The pre-processing was split into two distinguished step, the validation of the request and then the formatting of the values after to comply with the model requirements.
 
 ## Step 3: Fit your data! ##
 In the predict folder a file prediction.py contains all the code used to predict a new house's price. The file contains a function predict() that takes the preprocessed data as an input and returns a price as output.
 
 ### Highlights ###
+Instead of providing only a single model, one model for property-type was provided. Models performance were tested only once and then stored as csv in the model folder to be retrieved later.
 
 ## Step 4: Create your API ##
 In the app.py file, the Flask API contains:
@@ -121,7 +137,10 @@ In the app.py file, the Flask API contains:
     * POST request that receives the data of a house in json format.
     * GET request returning a string to explain what the POST expect (data and format).
     
+The complete documentation about the API is available [here](https://github.com/FrancescoMariottini/challenge-api-deployment/blob/main/Documentation.md).
+    
 ### Highlights ###
+
 
 ## Step 5: Create a Dockerfile to wrap your API ##
 To deploy the API Docker was used.
@@ -142,29 +161,33 @@ six|1.15.0
 Werkzeug|1.0.1
 
 ### Highlights ###
+First we had to find a base Dockerimage. While we found an existing image with ubuntu and python 3.8 already installed, it was too big (1.2 Go)
+so we opted in the end to start from the latest official ubuntu image that already had python 3.8 too, installing python3-pip ourselves.
 
 ## Step 6: Deploy your Docker image in Heroku ##
 Heroku allowed to push the docker container on their server and to start it (more information [here](https://github.com/becodeorg/BXL-Bouman-2.22/tree/master/content/05.deployment/4.Web_Application)).
 
 ### Highlights ###
+Making log messages available in the heroku web UI requird special attention. It turned out python print statements by themself were not reflected and stdout additionally needed flushing.
 
 ## Step 7: Document your API ##
-A clear readme was made to explain to the web developers where the API is hosted and how to interact with it.
+API is documented [here](https://github.com/FrancescoMariottini/challenge-api-deployment/blob/main/Documentation.md).
 
-A ppt presentation is available at ... 
-
-### API FAQ ##"
+### API FAQ ##
 Hereby follow the answers to the main questions about the API.
 
-*What routes are available? With which methods?*
+**What routes are available? With which methods?**<br>
+We have 2 routes available you'll find more information on them [here](https://github.com/FrancescoMariottini/challenge-api-deployment/blob/new/Documentation.md#alive)<br>
 
-*What kind of data is expected (How should they be formatted?*
+**What kind of data is expected (How should they be formatted?**<br>
+Here's a [link](https://github.com/FrancescoMariottini/challenge-api-deployment/blob/new/Documentation.md#request-entity) to the expect data entity.
+Some fields are mandatory and some must apply some validation conditions.<br>
 
-*What is mandatory or not?*
+**What is the output of each route in case of success?**<br>
+Here's a [link](https://github.com/FrancescoMariottini/challenge-api-deployment/blob/new/Documentation.md#return-entity) to more deatail about about the return entity<br>
 
-*What is the output of each route in case of success?*
-
-*What is the output in case of error?*
+**What is the output in case of error?**<br>
+Here's a [link](https://github.com/FrancescoMariottini/challenge-api-deployment/blob/new/Documentation.md#errors) to all the possible errors <br>
 
 ### Highlights ###
 
@@ -186,6 +209,6 @@ On modelling part:
 
 # Team:
 [Ankita Haldia](https://www.linkedin.com/in/ankitahaldia/)
-[Francesco Mariottini](https://www.linkedin.com/in/francescomariottini/
+[Francesco Mariottini](https://www.linkedin.com/in/francescomariottini/)
 [Opaps](https://www.linkedin.com/in/opapsditudidi/)
 [Philippe](https://www.linkedin.com/in/phfimmers/)
