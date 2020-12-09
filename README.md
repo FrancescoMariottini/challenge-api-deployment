@@ -7,6 +7,8 @@ Housing prices prediction is an essential element for an economy. Analysis of pr
 
 Our [previous project](https://github.com/FrancescoMariottini/Belgium-prices-prediction/settings) created a Linear Regression model to estimate the price of the house accurately with the given features. Within this project an online API to run the price prediction is made. 
 
+An overview of the project is available as the [Google presentation](https://docs.google.com/presentation/d/1Q2EqDDF23fEurSE9UoajGYLVUUjL3RoalAZpDN98q6E/edit#slide=id.p2) 
+
 # Target audience (to whom)
 ['ImmoEliza'](https://immoelissa.be/) web developers to receive price prediction based on input values provided by a user.
 
