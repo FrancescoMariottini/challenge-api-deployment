@@ -168,7 +168,7 @@ so we opted in the end to start from the latest official ubuntu image that alrea
 Heroku allowed to push the docker container on their server and to start it (more information [here](https://github.com/becodeorg/BXL-Bouman-2.22/tree/master/content/05.deployment/4.Web_Application)).
 
 ### Highlights ###
-Making log messages available in the heroku web UI requird special attention. It turned out python print statements by themself were not reflected stdout additionally needed flushing.
+Making log messages available in the heroku web UI requird special attention. It turned out python print statements by themself were not reflected and stdout additionally needed flushing.
 
 ## Step 7: Document your API ##
 API is documented [here](https://github.com/FrancescoMariottini/challenge-api-deployment/blob/main/Documentation.md).
