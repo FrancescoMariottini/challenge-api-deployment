@@ -161,16 +161,16 @@ building-state|string|no|Current state of the property|Must be one of these valu
 
 # Return entity 
 
-the response object has two sub objects the `error` containing an error message if there is one and the prediction object containing the prediction and other usefull information.
+the response object has two sub objects the `error` containing an error message if there is one and the prediction object containing the prediction and other useful information.
 
 Name|Type|Description
 ---|---|---
 priceL|int|The price predicted by our model based on the info you provided
-test_size|int|
-median_absolute_error|float|
-max_error|float|
-percentile025|float|
-percentile975|float|
+test_size|int|The number of properties used to test the model performance
+median_absolute_error|float|The maximum absolute error between the prediction and test real values for 50% of the tested properties
+max_error|float|The maximum absolute error when considering the entire test dataset of properties
+percentile025|float| minimum negative error when considering 95% of the properties (around the median) in the test dataset
+percentile975|float| maximum positive error when considering 95% of the properties (around the median) in the test dataset 
 
 
 
