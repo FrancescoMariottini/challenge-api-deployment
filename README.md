@@ -92,6 +92,7 @@ Morning meeting were scheduled to check the status of the project and plan the d
 An interim review was set up on 4/12/20 to upload an already working version before refining it. 
 
 ### Highlights ###
+Organisation and coordination after deploying the first deployment on Heroku on 4/12/2020 posed a challenge since many small improvements had to be tested which were overlapping.
 
 ## Step 1: Project preparation ##
 A repository was prepared to fullfill the required requirements: 
@@ -104,6 +105,7 @@ A repository was prepared to fullfill the required requirements:
 All these main folders, exclusively dedicated to the api, were created in a **source** folder. Additional folders (**assets**, **data**, **docs** and **outpus**) were created for the project.
 
 ### Highlights ###
+Even with git connection problems it was still possible to push for ordered changes in the repository through github.
 
 ## Step 2: Pre-processing pipeline ##
 This python module contains all the code to preprocess the data. The file cleaning_data.py contains all the code used to preprocess the data received to predict a new price (fill the nan, handle text data,...). The file contains a function preprocess() that takes a new house's data as input and returns those data preprocessed as output.
