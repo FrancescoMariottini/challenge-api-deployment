@@ -72,18 +72,15 @@ def predict():
         
         predicted_price = {
             "prediction" : {  
-                "Estimated price" : predict_price(processed),
-                "Accuracy" : {
-                            'test_size' :metrics['test_size'],
-                            'median_absolute_error' :metrics['median_absolute_error'],
-                            'max_error' : metrics['max_error'],
-                            'percentile025':metrics['percentile025'],
-                            'percentile975':metrics['percentile975'],
-                            }
-                        },
-                'Message': 200
-                          }
-        return make_response(jsonify(predicted_price))
+                "price": predict_price(processed),
+                "test_size": metrics['test_size'],
+                "median_absolute_error": metrics['median_absolute_error'],
+                "max_error": metrics['max_error'],
+                "percentile025": metrics['percentile025'],
+                "percentile975": metrics['percentile975']
+                }
+            }
+        return make_response(jsonify(predicted_price), 200)
         
 
 if __name__ == "__main__":
