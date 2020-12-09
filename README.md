@@ -136,7 +136,7 @@ In the app.py file, the Flask API contains:
     * POST request that receives the data of a house in json format.
     * GET request returning a string to explain what the POST expect (data and format).
     
-The complete documentation about the API is available [here]([here](https://github.com/FrancescoMariottini/challenge-api-deployment/blob/main/Documentation.md).
+The complete documentation about the API is available [here](https://github.com/FrancescoMariottini/challenge-api-deployment/blob/main/Documentation.md).
     
 ### Highlights ###
 
@@ -175,15 +175,16 @@ API is documented [here](https://github.com/FrancescoMariottini/challenge-api-de
 Hereby follow the answers to the main questions about the API.
 
 *What routes are available? With which methods?*
-We have 2 routes available you'll find more information on them (https://github.com/FrancescoMariottini/challenge-api-deployment/blob/new/Documentation.md#alive)
+We have 2 routes available you'll find more information on them [here](https://github.com/FrancescoMariottini/challenge-api-deployment/blob/new/Documentation.md#alive)<br>
 
 *What kind of data is expected (How should they be formatted?*
-
-*What is mandatory or not?*
+Here's a [link](https://github.com/FrancescoMariottini/challenge-api-deployment/blob/new/Documentation.md#request-entity) to the expect data entity.
+Some fields are mandatory and some must apply some validation conditions.<br>
 
 *What is the output of each route in case of success?*
-
+Here's a [link](https://github.com/FrancescoMariottini/challenge-api-deployment/blob/new/Documentation.md#return-entity) to more deatail about about the return entity<br>
 *What is the output in case of error?*
+Here's a [link](https://github.com/FrancescoMariottini/challenge-api-deployment/blob/new/Documentation.md#errors) to all the possible errors <br>
 
 ### Highlights ###
 
