@@ -13,9 +13,6 @@ from preprocessing.validation import DataFeatures
 
 app = Flask(__name__)
 
-print(os.getcwd())
-print(sys.path)
-
 
 @app.route('/')
 def status():
@@ -60,8 +57,15 @@ def predict():
         # DataFeatures corrects "10" to 10 where needed
         validated = data.load(datadict)
 
-        # Preprocess doesn't do anyting now
+        # print to heroku log
+        print(f"validated:\n", validated)
+        sys.stdout.flush()
+
         processed = preprocess(validated)
+
+        # print to heroku log
+        print(f"preprocessed:\n", processed)
+        sys.stdout.flush()
 
         #loading the model_metrics
         #model_metrics = pd.read_csv('models_metrics'.csv)
