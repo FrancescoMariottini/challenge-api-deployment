@@ -77,7 +77,7 @@ Output requirements were not strictly fixed but rather delegated to each team af
 ```json
 response = {
   prediction: {
-    priceL: int,
+    price: int,
     test_size: int,
     median_absolute_error: float,
     max_error: float,
@@ -126,6 +126,7 @@ The pre-processing was split into two distinguished step, the validation of the 
 In the predict folder a file prediction.py contains all the code used to predict a new house's price. The file contains a function predict() that takes the preprocessed data as an input and returns a price as output.
 
 ### Highlights ###
+Instead of providing only a single model, one model for property-type was provided. Models performance were tested only once and then stored as csv in the model folder to be retrieved later.
 
 ## Step 4: Create your API ##
 In the app.py file, the Flask API contains:
@@ -138,6 +139,7 @@ In the app.py file, the Flask API contains:
 The complete documentation about the API is available [here]([here](https://github.com/FrancescoMariottini/challenge-api-deployment/blob/main/Documentation.md).
     
 ### Highlights ###
+
 
 ## Step 5: Create a Dockerfile to wrap your API ##
 To deploy the API Docker was used.
@@ -167,9 +169,7 @@ Heroku allowed to push the docker container on their server and to start it (mor
 ### Highlights ###
 
 ## Step 7: Document your API ##
-A clear readme was made to explain to the web developers where the API is hosted and how to interact with it.
-
-A ppt presentation is available at ... 
+API is documented [here](https://github.com/FrancescoMariottini/challenge-api-deployment/blob/main/Documentation.md).
 
 ### API FAQ ##"
 Hereby follow the answers to the main questions about the API.
