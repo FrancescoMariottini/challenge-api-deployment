@@ -134,6 +134,7 @@ response = {
 }
 </pre>
 
+// Note that there is no error when the request succeeds.
 
 
 # Request entity 
