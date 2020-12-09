@@ -50,10 +50,7 @@ The Base url is roberta-eliza.herokuapp.com.
 
 ## Request Entity Json
 
-The action of every agent <br /> 
-  into the world <br />
-starts <br />
-  from their physical selves. <br />
+
 <pre>
 { <br /> 
   "data": { <br />
@@ -70,7 +67,7 @@ starts <br />
             "furnished": Opional[bool],<br>
             "open-fire": Optional[bool],<br>
             "terrace": Optional[bool],<br>
-            "terrace-area": Optional[int]<br>,
+            "terrace-area": Optional[int],<br>
             "facades-number": Optional[int],<br>
             "building-state": Optional["NEW" | "GOOD" | "TO RENOVATE" | "JUST RENOVATED" | "TO REBUILD"]<br>
     }<br>
@@ -78,7 +75,19 @@ starts <br />
 
 ## Response Entity format
 
-The API will repond with a float object indicating the predicted price of the property.
+<pre>
+response = {
+  prediction: {
+    priceL: int,
+    test_size: int,
+    median_absolute_error: float,
+    max_error: float,
+    percentile025: float,
+    percentile975: float
+  },
+  error: str
+}
+</pre>
 
 ## Example Request
 
@@ -108,6 +117,18 @@ POST https://api.tobedefined.com/predict
 </pre>
 // Note you can ommit some parameters in the Json file if they are `Optional`
 
+Response :
+response = {
+  prediction: {
+    priceL: 190000,
+    test_size: 5,
+    median_absolute_error: 25314.01,
+    max_error: 2548.01,
+    percentile025: 124.12,
+    percentile975: 13485.12
+  }
+}
+
 
 # Request entity 
 
@@ -134,10 +155,29 @@ building-state|string|no|Current state of the property|Must be one of these valu
 
 # Return entity 
 
-Name|Type|Mandatory|Description
----|---|---|---
-prediction|float|no|The price predicted by our model based on the info you provided
-error|string|no|If something didn't go right in the prediction, we'll let you know through this message
+the response object has two sub objects the `error` containing an error message if there is one and the prediction object containing the prediction and other usefull information.
+
+response = {
+  prediction: {
+    priceL: int,
+    test_size: int,
+    median_absolute_error: float,
+    max_error: float,
+    percentile025: float,
+    percentile975: float
+  },
+  error: str
+}
+
+Name|Type|Description
+---|---|---
+priceL|int|The price predicted by our model based on the info you provided
+test_size|int|
+median_absolute_error|float|
+max_error|float|
+percentile025|float|
+percentile975|float|
+
 
 
 # Errors
