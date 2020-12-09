@@ -175,7 +175,7 @@ API is documented [here](https://github.com/FrancescoMariottini/challenge-api-de
 Hereby follow the answers to the main questions about the API.
 
 *What routes are available? With which methods?*
-We have 2 routes available you'll find more information on them [here](https://github.com/FrancescoMariottini/challenge-api-deployment/blob/new/Documentation.md#alive)
+We have 2 routes available you'll find more information on them (https://github.com/FrancescoMariottini/challenge-api-deployment/blob/new/Documentation.md#alive)
 
 *What kind of data is expected (How should they be formatted?*
 
