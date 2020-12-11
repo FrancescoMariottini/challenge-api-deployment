@@ -5,6 +5,7 @@ import models_creation
 from dataset.repository import insert
 import typing
 import pandas as pd
+from preprocess_features import preprocess_features
 
 def train(): 
 
@@ -13,7 +14,7 @@ def train():
     new_data : dict scraping.scrap_list(results)
 
     # call the data cleaning function
-    df : pd.DataFrame = clean_for_database(new_data)
+    df, df_outliers = clean_for_database(new_data)
 
     # establish connection with the database
     #check if the conn id established
@@ -23,6 +24,8 @@ def train():
     message = insert(df)
 
     if message = 'Data posted' :
+        # call the preprocess for features
+        df = preprocess_features(df)        
         # call the model function
         status = models_creation.get_linear_model(df)
 
