@@ -41,7 +41,7 @@ def add_aggregated_columns(df: pd.DataFrame, group_parameters: Dict[str, str] = 
     column_names = []
     for key, value in group_parameters.items():
         #dealing with null when grouping
-        if not df.loc[:, key].isnull().all():
+        if df.loc[:, key].isnull().all() == False:
             try:
                 df_grp = df.loc[:, [key, value]].dropna(axis=0).groupby(value, as_index=False)[key].agg(groupby_aggregators)
                 column_names = [f"{value}_{AGGREGATOR_COLUMNS[aggregator]}_{key}" for aggregator in groupby_aggregators]
@@ -52,7 +52,7 @@ def add_aggregated_columns(df: pd.DataFrame, group_parameters: Dict[str, str] = 
                 columns_to_replace.remove(key)
                 print(f'aggregation not working for {key}')
         # drop at the end so order in group_parameters not important
-        else:
+        elif df.loc[:, key].isnull().all() == True:
             #remove columns could not regroup
             if value in columns_to_replace:
                 columns_to_replace.remove(key)
@@ -98,6 +98,6 @@ def preprocess_features(df_out: pd.DataFrame = None,
     df_out = df_out.replace(to_replace=[True, False], value=[1, 0])
     return df_out
 
-df = pd.read_csv("dataset_preprocessed.csv")
-
-df = preprocess_features(df)
+### WINDOWS TESTING ###
+# df = pd.read_csv("dataset_preprocessed.csv")
+# df = preprocess_features(df)
