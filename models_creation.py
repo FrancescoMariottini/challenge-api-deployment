@@ -98,7 +98,7 @@ def get_linear_model(df: pd.DataFrame,
 
         text_stream.write(",".join([pkl_filename]+[m for m in metrics.values()]) + "\n")
     
-    return lin_reg, metrics
+    return "success"
 
 
 #TESTING ON WINDOWS (to exclude as comment when running Jupyter NB)
@@ -108,8 +108,8 @@ df, df_outliers = dc.get_preprocessed_dataframe(cleaned_csv_path= CLEANED_CSV_FI
                                                 features= FEATURES,
                                                 model_subtype= MODEL_SUBTYPE,
                                                 log_on_columns= LOG_ON_COLUMNS)
-lin_reg, metrics = get_linear_model(df, model_subtype= MODEL_SUBTYPE)
-print(metrics)
-print(df_outliers)
-print(df.info())
+#lin_reg, metrics = get_linear_model(df, model_subtype= MODEL_SUBTYPE)
+#print(metrics)
+#print(df_outliers)
+#print(df.info())
 #print(describe_with_tukey_fences(df))
