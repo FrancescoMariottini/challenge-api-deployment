@@ -118,7 +118,7 @@ Even with git connection problems it was still possible to push for ordered chan
 It wasn't initially clear how to split the code between the model creation/evaluation and the API service thus some additional time was spent on reconverting the files structure after.
 
 ## Step 2: Scrapping immoweb website for updates ##
-### Highlights ###
+The code from our [immoweb scraping challenge](https://github.com/FrancescoMariottini/challenge-collecting-data) at becode was integrated. It is based on the [Selenium Webdriver](https://pypi.org/project/selenium/). We changed it to work with firefox rather than chromium, because the headless mode of chromium returned anti-bot captcha pages and firefox did not.
 
 ## Step 3: Cleaning dataset for database storing ##
 ### Highlights ###
