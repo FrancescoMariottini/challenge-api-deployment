@@ -120,7 +120,7 @@ It wasn't initially clear how to split the code between the model creation/evalu
 ## Step 2: Scrapping immoweb website for updates ##
 ### Highlights ###
 
-## Step 3: Cleaning dataset for database storin ##
+## Step 3: Cleaning dataset for database storing ##
 ### Highlights ###
 
 ## Step 4: Set up of an online database ## 
