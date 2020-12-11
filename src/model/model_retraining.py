@@ -2,7 +2,7 @@
 from scraping import scraping
 from preprocessing_dataset import clean_for_database 
 import models_creation
-from dataset.repository import insert
+from database.repository import insert, get_all
 import typing
 import pandas as pd
 from preprocess_features import preprocess_features
