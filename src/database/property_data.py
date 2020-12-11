@@ -7,7 +7,7 @@ from sqlalchemy.sql.sqltypes import Integer, String, Boolean
 class PropertyData(Base):
 
     __tablename__ = 'property_data'
-    id = Column(Integer, primary_key=True)
+    id = Column(String, primary_key=True)
     postcode = Column(Integer),
     house_is = Column(Boolean),
     property_subtype = Column(String),
