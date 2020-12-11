@@ -4,17 +4,14 @@
 # import created modules
 import model.modeling as modeling
 import model.evaluation as evaluation
-from model.preprocessing_dataset import DataCleaning
+from clean.preprocessing_dataset import DataCleaning
 
 # import standard libraries
 import os
-import numpy as np
 import pandas as pd
 
 #import scikit modules
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import median_absolute_error
-from sklearn.metrics import max_error
 
 #import typing
 from typing import List
@@ -114,11 +111,3 @@ print(metrics)
 print(df_outliers)
 print(df.info())
 #print(describe_with_tukey_fences(df))
-
-
-
-
-
-
-
-
