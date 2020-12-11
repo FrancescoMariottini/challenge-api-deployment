@@ -8,21 +8,21 @@ class PropertyData(Base):
 
     __tablename__ = 'property_data'
     id = Column(String, primary_key=True)
-    postcode = Column(Integer),
-    house_is = Column(Boolean),
-    property_subtype = Column(String),
-    price = Column(Integer),
-    room_number = Column(Integer),
-    area = Column(Integer),
-    equipped_kitchen_has = Column(Boolean),
-    furnished = Column(Boolean),
-    open_fire = Column(Boolean),
-    terrace = Column(Boolean),
-    garden = Column(Boolean),
-    terrace_area = Column(Integer),
-    garden_area = Column(Integer),
-    facades_number = Column(Integer),
-    swimming_pool_has = Column(Boolean),
+    postcode = Column(Integer)
+    house_is = Column(Boolean)
+    property_subtype = Column(String)
+    price = Column(Integer)
+    room_number = Column(Integer)
+    area = Column(Integer)
+    equipped_kitchen_has = Column(Boolean)
+    furnished = Column(Boolean)
+    open_fire = Column(Boolean)
+    terrace = Column(Boolean)
+    garden = Column(Boolean)
+    terrace_area = Column(Integer)
+    garden_area = Column(Integer)
+    facades_number = Column(Integer)
+    swimming_pool_has = Column(Boolean)
     building_state_agg = Column(String)
 
     def __init__(self, id, postcode, house_is, property_subtype, price, room_number, area, equipped_kitchen_has, furnished,
