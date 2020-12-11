@@ -14,7 +14,7 @@ def train():
     new_data : dict scraping.scrap_list(results)
 
     # call the data cleaning function
-    df : pd.DataFrame = clean_for_database(new_data)
+    df, df_outliers = clean_for_database(new_data)
 
     # establish connection with the database
     #check if the conn id established
