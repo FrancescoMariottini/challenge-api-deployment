@@ -36,12 +36,16 @@ Input requirements for the web developers were initially agreed with the other B
 
 0. Team organization
 1. Project preparation
-2. Pre-processing pipeline
-3. Fit your data!
-4. Create your API
-5. Create a Dockerfile to wrap your API
-6. Deploy your Docker image in Heroku
-7. Document your API
+2. Scrapping immoweb website for updates
+3. Cleaning dataset for database storing
+4. Set up of an online database
+5. Querying the online database
+6. Pre-processing pipeline
+7. Fit your data!
+8. Create your API
+9. Create a Dockerfile to wrap your API
+10. Deploy your Docker image in Heroku
+11. Document your API
 
 For step 2 and 3 [source files](https://github.com/FrancescoMariottini/Belgium-prices-prediction/tree/main/source) from the previous project were used as basis after adapting them in in line with the JSON input requirements.
 
@@ -113,7 +117,19 @@ All these main folders, exclusively dedicated to the api, were created in a **so
 Even with git connection problems it was still possible to push for ordered changes in the repository through github.
 It wasn't initially clear how to split the code between the model creation/evaluation and the API service thus some additional time was spent on reconverting the files structure after.
 
-## Step 2: Pre-processing pipeline ##
+## Step 2: Scrapping immoweb website for updates ##
+### Highlights ###
+
+## Step 3: Cleaning dataset for database storin ##
+### Highlights ###
+
+## Step 4: Set up of an online database ## 
+### Highlights ###
+
+## Step 5: Querying the online database ## 
+### Highlights ###
+
+## Step 6: Pre-processing pipeline ##
 The DataFeatures class in validation.py serves to validate if the client stuck to the required json schema and stayed within realistic value ranges. It has operations for returning human readable errors and returning a corrected json, where for example "0" is evaluated as integer 0. The class is based on the [marshmallow](https://github.com/marshmallow-code/marshmallow) library.
 
 The file cleaning_data.py contains all the code used to preprocess the validated request received to predict a new price. Optional values not provided by the client but needed by our model are imputed to be 0 (ex. does not have swimmingpool) or 1 (ex. garden-area is 0). We use 1 to indicate a zero area value because the model feature is actually log(area).
@@ -121,13 +137,13 @@ The file cleaning_data.py contains all the code used to preprocess the validated
 ### Highlights ###
 The pre-processing was split into two distinguished step, the validation of the request and then the formatting of the values after to comply with the model requirements.
 
-## Step 3: Fit your data! ##
+## Step 7: Fit your data! ##
 In the predict folder a file prediction.py contains all the code used to predict a new house's price. The file contains a function predict() that takes the preprocessed data as an input and returns a price as output.
 
 ### Highlights ###
 Instead of providing only a single model, one model for property-type was provided. Models performance were tested only once and then stored as csv in the model folder to be retrieved later.
 
-## Step 4: Create your API ##
+## Step 8: Create your API ##
 In the app.py file, the Flask API contains:
 * A route at / that accept:
     * GET request and return "alive" if the server is alive.
@@ -139,7 +155,7 @@ The complete documentation about the API is available [here](https://github.com/
     
 ### Highlights ###
 
-## Step 5: Create a Dockerfile to wrap your API ##
+## Step 9: Create a Dockerfile to wrap your API ##
 To deploy the API Docker was used.
 The Dockerfile created an image with Ubuntu and Python 3.8 plus all the required dependencies for the created code:
 library|version
@@ -161,13 +177,13 @@ Werkzeug|1.0.1
 First we had to find a base Dockerimage. While we found an existing image with ubuntu and python 3.8 already installed, it was too big (1.2 Go)
 so we opted in the end to start from the latest official ubuntu image that already had python 3.8 too, installing python3-pip ourselves.
 
-## Step 6: Deploy your Docker image in Heroku ##
+## Step 10: Deploy your Docker image in Heroku ##
 Heroku allowed to push the docker container on their server and to start it (more information [here](https://github.com/becodeorg/BXL-Bouman-2.22/tree/master/content/05.deployment/4.Web_Application)).
 
 ### Highlights ###
 Making log messages available in the heroku web UI requird special attention. It turned out python print statements by themself were not reflected and stdout additionally needed flushing.
 
-## Step 7: Document your API ##
+## Step 11: Document your API ##
 API is documented [here](https://github.com/FrancescoMariottini/challenge-api-deployment/blob/main/Documentation.md).
 
 ### API FAQ ##
@@ -200,7 +216,9 @@ Project is considered concluded and no additional work is not foreseen. However 
 # Timeline (when): 
 - 2/12/2020 (start)
 - 9/12/2020 (code deliverable)
+- 9/12/2020 (extension for database storing and update)
 - 14/12/2020 (presentation deliverable)
+
 
 # Team:
 [Ankita Haldia](https://www.linkedin.com/in/ankitahaldia/)
