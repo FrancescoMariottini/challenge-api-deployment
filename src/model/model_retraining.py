@@ -11,7 +11,7 @@ def train():
 
     # Initiating the scraping function
     results: list = scraping.get_search_results(minresults:int)
-    new_data : dict scraping.scrap_list(results)
+    new_data : dict = scraping.scrap_list(results)
 
     # call the data cleaning function
     df, df_outliers = clean_for_database(new_data)
@@ -22,12 +22,13 @@ def train():
     # call the update_database function
 
     message = insert(df)
-
+    df_out = get_all()
+    
     if message = 'Data posted' :
         # call the preprocess for features
-        df = preprocess_features(df)        
+        df_out = preprocess_features(df_out)        
         # call the model function
-        status = models_creation.get_linear_model(df)
+        status = models_creation.get_linear_model(df_out)
 
     
     return status
