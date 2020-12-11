@@ -29,7 +29,8 @@ def train():
         df_out = preprocess_features(df_out)        
         # call the model function
         status = models_creation.get_linear_model(df_out)
-
+    else : 
+        status = message
     
     return status
 
