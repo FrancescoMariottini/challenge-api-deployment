@@ -1,7 +1,12 @@
 FROM ubuntu:latest
+
 RUN apt-get update -y \
 	&& apt-get install -y python3-pip \
+	&& DEBIAN_FRONTEND=noninteractive apt-get install -y software-properties-common \
+	&& add-apt-repository ppa:ubuntu-mozilla-security/ppa \
+	&& apt-get install -y firefox firefox-geckodriver \
 	&& rm -rf /var/lib/apt/lists/*
+
 RUN mkdir src
 COPY src /src
 WORKDIR /src

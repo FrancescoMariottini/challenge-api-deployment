@@ -4,17 +4,14 @@
 # import created modules
 import model.modeling as modeling
 import model.evaluation as evaluation
-from model.preprocessing_dataset import DataCleaning
+from clean.preprocessing_dataset import DataCleaning
 
 # import standard libraries
 import os
-import numpy as np
 import pandas as pd
 
 #import scikit modules
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import median_absolute_error
-from sklearn.metrics import max_error
 
 #import typing
 from typing import List
@@ -40,7 +37,7 @@ FEATURES = ["area", "rooms_number", "postcode",'land_surface','garden','garden_a
             'swimming_pool_has','furnished','open_fire', 'terrace', 'terrace_area', 'facades_number','building_state_agg',]
 
 TARGET = "price"
-MODEL_SUBTYPE = "OTHERS"
+MODEL_SUBTYPES = ["HOUSE","APARTMENT","OTHERS"]
 LOG_ON_COLUMNS= ["garden_area", "terrace_area", "land_surface", "area"]
 #FM 7/12/20 defining dummies to be dropped. Others removed since filtering
 DUMMIES_TO_DROP = ['9999', 'to_renovate']
@@ -61,44 +58,46 @@ CLEANED_CSV_FILEPATH_WIN = os.getcwd() + r"\outputs" + "\df_after_cleaning.csv"
 
 def get_linear_model(df: pd.DataFrame,
                      target: str = TARGET,
-                     model_subtype: str = "OTHERS", #FM 7/12/20 model subtype added
+                     model_subtypes: str = MODEL_SUBTYPES
                      training_to_input_columns : Dict[str, str] = TRAINING_TO_INPUT_COLUMNS,
                      dummies_to_drop: List[str] = DUMMIES_TO_DROP,
                      model_folder: str = MODEL_FOLDER):
 
-    # Use One Hot Encoding For postcodes
-    dummies = pd.get_dummies(df, prefix='', prefix_sep='')
-    #FM 7/12/20 fixed list of dummies replaced with variable (no drop of OTHERS if filtering)
-    df = dummies.drop(dummies_to_drop, axis='columns')
-    df.rename(columns= training_to_input_columns, inplace=True)
-    X = df.drop([target], axis='columns')
-    y = df.price
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=10)
-    # Returns a linear regression model fitted with Ordinary Least Squares method
-    lin_reg = modeling.OLS_linear_regression(X_train, y_train)
-    # save model through pickle
-    # FM 7/12/20 filename based on model_type
-    # FM 7/12/20 lower character really necessary ?
-    pkl_filename = model_subtype.lower()+'.pkl'
-    with open(os.path.join(model_folder, pkl_filename), 'wb') as model_pkl:
+    for model_subtype in model_subtypes : 
+        # Use One Hot Encoding For postcodes
+        dummies = pd.get_dummies(df, prefix='', prefix_sep='')
+        #FM 7/12/20 fixed list of dummies replaced with variable (no drop of OTHERS if filtering)
+        df = dummies.drop(dummies_to_drop, axis='columns')
+        df.rename(columns= training_to_input_columns, inplace=True)
+        X = df.drop([target], axis='columns')
+        y = df.price
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=10)
+        # Returns a linear regression model fitted with Ordinary Least Squares method
+        lin_reg = modeling.OLS_linear_regression(X_train, y_train)
+        # save model through pickle
+        # FM 7/12/20 filename based on model_type
+        # FM 7/12/20 lower character really necessary ?
+        pkl_filename = model_subtype.lower()+'.pkl'
+        with open(os.path.join(model_folder, pkl_filename), 'wb') as model_pkl:
         pickle.dump(lin_reg, model_pkl)
-    #FM 8/12/20 Ankita please clarify why needed
-    columns = {'data_columns': [col for col in X.columns]}
-    json_filename = model_subtype.lower() + '.json'
-    with open(os.path.join(model_folder, json_filename), "w") as f:
+        #FM 8/12/20 Ankita please clarify why needed
+        columns = {'data_columns': [col for col in X.columns]}
+        json_filename = model_subtype.lower() + '.json'
+        with open(os.path.join(model_folder, json_filename), "w") as f:
         f.write(json.dumps(columns))
-    #FM 7/12/20  initialising model evalution to get error
-    model_evaluation_obj = evaluation.Model_Evaluation(lin_reg)
-    ytrain_predictions, ytest_predictions = model_evaluation_obj.get_predictions(X_train, X_test)
-    y_test, ytest_predictions, metrics = model_evaluation_obj.predict_model(X_train, y_train, X_test, y_test)
-    add_headers = True
-    if os.path.exists(os.path.join(model_folder, "models_metrics.csv")):
-        add_headers = False
-    text_stream = open(os.path.join(model_folder, "models_metrics.csv"), 'a')
-    if add_headers:
-        text_stream.write(",".join(["filename"] + [m for m in metrics.keys()]) + "\n")
+        #FM 7/12/20  initialising model evalution to get error
+        model_evaluation_obj = evaluation.Model_Evaluation(lin_reg)
+        ytrain_predictions, ytest_predictions = model_evaluation_obj.get_predictions(X_train, X_test)
+        y_test, ytest_predictions, metrics = model_evaluation_obj.predict_model(X_train, y_train, X_test, y_test)
+        add_headers = True
+        if os.path.exists(os.path.join(model_folder, "models_metrics.csv")):
+            add_headers = False
+        text_stream = open(os.path.join(model_folder, "models_metrics.csv"), 'a')
+        if add_headers:
+            text_stream.write(",".join(["filename"] + [m for m in metrics.keys()]) + "\n")
 
-    text_stream.write(",".join([pkl_filename]+[m for m in metrics.values()]) + "\n")
+        text_stream.write(",".join([pkl_filename]+[m for m in metrics.values()]) + "\n")
+    
     return lin_reg, metrics
 
 
@@ -114,11 +113,3 @@ print(metrics)
 print(df_outliers)
 print(df.info())
 #print(describe_with_tukey_fences(df))
-
-
-
-
-
-
-
-

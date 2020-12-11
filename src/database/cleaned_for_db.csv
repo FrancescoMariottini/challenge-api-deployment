@@ -1,4 +1,4 @@
-,area,rooms_number,postcode,land_surface,garden,garden_area,equipped_kitchen_has,swimming_pool_has,furnished,open_fire,terrace,terrace_area,facades_number,building_state_agg,house_is,property_subtype,price
+id,area,rooms_number,postcode,land_surface,garden,garden_area,equipped_kitchen_has,swimming_pool_has,furnished,open_fire,terrace,terrace_area,facades_number,building_state_agg,house_is,property_subtype,price
 0,242.0,3.0,4180,1403.0,1,1000.0,1,0,0,0,1,36.0,3.0,good,1,MIXED_USE_BUILDING,295000.0
 1,349.0,4.0,8730,1526.0,1,977.0,1,0,0,0,0,0.0,4.0,good,1,VILLA,675000.0
 2,303.0,5.0,4020,760.0,0,0.0,1,0,0,0,0,0.0,0.0,to_renovate,1,APARTMENT_BLOCK,250000.0
