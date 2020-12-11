@@ -97,3 +97,7 @@ def preprocess_features(df_out: pd.DataFrame = None,
     # replacing bool to avoid scikit-learn issue later #moved from preprocessing on 11/12/20
     df_out = df_out.replace(to_replace=[True, False], value=[1, 0])
     return df_out
+
+df = pd.read_csv("dataset_preprocessed.csv")
+
+df = preprocess_features(df)
