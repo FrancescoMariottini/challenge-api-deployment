@@ -3,16 +3,16 @@
 
 import json
 import os
-import sys
+import pandas as pd
 
 from flask import Flask,request, jsonify , make_response
 
-from predict.prediction import predict_price, load_metrics
+from predict.prediction import predict_price , load_metrics
 from preprocessing.cleaning_data import preprocess
 from preprocessing.validation import DataFeatures
+from model.model_retraining import train
 
 app = Flask(__name__)
-
 
 @app.route('/')
 def status():
@@ -29,9 +29,8 @@ def predict():
         return response
 
     else :
-        req = request.get_json()
         try:
-            datadict = req['data']
+            datadict = request.get_json()['data']
         except:
             errors = {
                 "error": {"data": "no 'data' element in root"}
@@ -57,32 +56,38 @@ def predict():
         # DataFeatures corrects "10" to 10 where needed
         validated = data.load(datadict)
 
-        # print to heroku log
-        print(f"validated:\n", validated)
-        sys.stdout.flush()
-
+        # Preprocess doesn't do anyting now
         processed = preprocess(validated)
-
-        # print to heroku log
-        print(f"preprocessed:\n", processed)
-        sys.stdout.flush()
 
         #loading the model_metrics
         metrics = load_metrics(processed)
         
         predicted_price = {
             "prediction" : {  
-                "price": predict_price(processed),
-                "test_size": metrics['test_size'],
-                "median_absolute_error": metrics['median_absolute_error'],
-                "max_error": metrics['max_error'],
-                "percentile025": metrics['percentile025'],
-                "percentile975": metrics['percentile975']
-                }
-            }
-        return make_response(jsonify(predicted_price), 200)
-        
+                "Estimated price" : predict_price(processed),
+                "Accuracy" : {
+                            'test_size' :metrics['test_size'],
+                            'median_absolute_error' :metrics['median_absolute_error'],
+                            'max_error' : metrics['max_error'],
+                            'percentile025':metrics['percentile025'],
+                            'percentile975':metrics['percentile975'],
+                            }
+                        },
+                'Message': 200
+                          }
+        return make_response(jsonify(predicted_price))
 
+@app.route('/update')
+def update_model():
+    #call the train method
+    response = train()
+
+    #return response
+    return response
+
+
+
+       
 if __name__ == "__main__":
     # You want to put the value of the env variable PORT if it exist
     # (some services only open specifiques ports)
