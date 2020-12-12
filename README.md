@@ -205,6 +205,7 @@ Here's a [link](https://github.com/FrancescoMariottini/challenge-api-deployment/
 # Conclusions
 First release of the API was made easier by using information from the previous project and by splitting the work among all the team members.
 Additional small improvements posed a challenge since their impact had to be verifed in all the different steps involving different platforms/tools (comparing to a simpler code integration). 
+Extension for database storing and update was hampered by the reduced working time due to unplanned Becode events and team members' personal reasons.
 
 # Future steps
 Project is considered concluded and no additional work is not foreseen. However a few possible improvements on the modelling part are hereby suggested to improve its accuracy:
@@ -216,7 +217,7 @@ Project is considered concluded and no additional work is not foreseen. However 
 # Timeline (when): 
 - 2/12/2020 (start)
 - 9/12/2020 (code deliverable)
-- 11/12/2020 (extension for database storing and update). 5 person-days available due to unplanned events by Becode and personal reasons.
+- 11/12/2020 (extension for database storing and update). Only 5 person-days available from 10/12/20 to 11/12/20 due to unplanned Becode events and team members' personal reasons.
 - 14/12/2020 (presentation deliverable)
 
 
