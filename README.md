@@ -216,7 +216,7 @@ Project is considered concluded and no additional work is not foreseen. However 
 # Timeline (when): 
 - 2/12/2020 (start)
 - 9/12/2020 (code deliverable)
-- 9/12/2020 (extension for database storing and update)
+- 11/12/2020 (extension for database storing and update). 5 person-days available due to unplanned events by Becode and personal reasons.
 - 14/12/2020 (presentation deliverable)
 
 
