@@ -49,7 +49,7 @@ The Base url is roberta-eliza.herokuapp.com.
 - Response Format - Json
 - Response Object - [price-wrapper](#Return-entity)
 - API Version - 1.0
-- Resource URI - roberta-eliza.herokuapp.com/Predict
+- Resource URI - roberta-eliza.herokuapp.com/predict
 
 ## Request Entity Json
 
