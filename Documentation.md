@@ -44,6 +44,7 @@ The Base url is roberta-eliza.herokuapp.com.
 ## Resource Information
 
 - Authentication - Not required
+- Request Format -  Json
 - Request Object - data
 - Response Format - Json
 - Response Object - price-wrapper
