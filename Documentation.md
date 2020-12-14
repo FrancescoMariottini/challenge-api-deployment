@@ -15,7 +15,7 @@ The Base url is roberta-eliza.herokuapp.com.
 1. Requests<br>
 1.1. [Alive](#alive)<br>
 1.2. [Predict](#predict)<br>
-2. Objects<br>
+2. Entities<br>
 2.1. [Request entity](#Request-entity) <br>
 2.2. [Response entity](#Response-entity)<br>
 3. [Errors](#Errors)<br>
@@ -24,7 +24,7 @@ The Base url is roberta-eliza.herokuapp.com.
 
 ## Allowed HTTP Methods
 
-- GET - Returns "alive" if the server is alive.
+- GET - Returns "alive" string if the server is alive.
 
 ## Ressource Information
 
