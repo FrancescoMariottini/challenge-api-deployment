@@ -6,6 +6,7 @@ import os
 import sys
 
 from flask import Flask,request, jsonify , make_response
+from flask_cors import CORS
 
 from predict.prediction import predict_price, load_metrics
 from preprocessing.cleaning_data import preprocess
@@ -13,6 +14,7 @@ from preprocessing.validation import DataFeatures
 
 app = Flask(__name__)
 
+CORS(app, resources=r'/*', allow_headers='Content-Type')
 
 @app.route('/')
 def status():
