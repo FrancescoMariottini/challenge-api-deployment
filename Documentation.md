@@ -17,7 +17,7 @@ The Base url is roberta-eliza.herokuapp.com.
 1.2. [Predict](#predict)<br>
 2. Entities<br>
 2.1. [Request entity](#Request-entity) <br>
-2.2. [Response entity](#Response-entity)<br>
+2.2. [Response entity](#Return-entity)<br>
 3. [Errors](#Errors)<br>
 
 # Alive
@@ -47,7 +47,7 @@ The Base url is roberta-eliza.herokuapp.com.
 - Request Format -  Json
 - Request Object - [data](#Request-entity)
 - Response Format - Json
-- Response Object - [price-wrapper](#Response-entity)
+- Response Object - [price-wrapper](#Return-entity)
 - API Version - 1.0
 - Resource URI - roberta-eliza.herokuapp.com/Predict
 
