@@ -96,11 +96,11 @@ response = {
 
 1. Get a string to explain what the POST expects (data and format):
 
-GET https://api.tobedefined.com/predict
+GET roberta-eliza.herokuapp.com/predict
 
 2. Get a prediction:
 
-POST https://api.tobedefined.com/predict
+POST roberta-eliza.herokuapp.com/predict
 
 
 <pre>
