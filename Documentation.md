@@ -8,7 +8,7 @@ This API version of the API (1.0) exposes serveral routes to get predictions on 
 Access to routes doesn't need any kind of authentification.
 To get a prediction you need to provide several parameters, some are mandatory other are optional. 
 The more parameters your provide the better the prediction will be.
-The Base url is roberta-eliza.herokuapp.com.
+The Base url is roberta-eliza-cors.herokuapp.com.
 
 ## Summary
 
@@ -32,7 +32,7 @@ The Base url is roberta-eliza.herokuapp.com.
 - Request Object - None
 - Response Format - string
 - API Version - 1.0
-- Resource URI - roberta-eliza.herokuapp.com/
+- Resource URI - roberta-eliza-cors.herokuapp.com/
 
 # Predict 
 
@@ -49,7 +49,7 @@ The Base url is roberta-eliza.herokuapp.com.
 - Response Format - Json
 - Response Object - [price-wrapper](#Return-entity)
 - API Version - 1.0
-- Resource URI - roberta-eliza.herokuapp.com/predict
+- Resource URI - roberta-eliza-cors.herokuapp.com/predict
 
 ## Request Entity Json
 
@@ -96,11 +96,11 @@ response = {
 
 1. Get a string to explain what the POST expects (data and format):
 
-GET roberta-eliza.herokuapp.com/predict
+GET roberta-eliza-cors.herokuapp.com/predict
 
 2. Get a prediction:
 
-POST roberta-eliza.herokuapp.com/predict
+POST roberta-eliza-cors.herokuapp.com/predict
 
 
 <pre>
